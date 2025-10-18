@@ -1,0 +1,18 @@
+{
+  "name": "kaizen-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^2.5.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mercadopago": "^1.5.15",
+    "react-360-view": "^0.1.3"
+  }
+}
