@@ -163,12 +163,11 @@ Este proyecto es privado y propiedad de Kaizen Cosmetics.
 
 ## 👥 Autores
 
-- **Desarrollador Frontend/Backend**: [Tu Nombre]
+- **Desarrollador Frontend/Backend**: Gisela Lanzillotta
 - **Cliente**: Kaizen Cosmetics - @chinaze.trenzas
 
 ## 📞 Contacto
 
-- **Email**: ventas@kaizencosmetics.com
 - **WhatsApp**: +54 11 6105-0878
 - **Instagram**: @chinaze.trenzas
 
