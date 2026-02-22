@@ -139,6 +139,7 @@ export default function App() {
          children={(
           <GelFeatured 
            precio={PRODUCT.price}
+           showHint={false}
            onClick={() => {
            setProductoSeleccionado(PRODUCT);
            setPage('detalle');

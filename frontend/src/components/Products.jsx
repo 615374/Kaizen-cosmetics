@@ -91,17 +91,19 @@ export default function Productos({
           {productosFiltrados.map(producto => (
             <div key={producto.id} className="columna-producto-gel">
               
-              {/* RENDERIZADO DEL PRODUCTO: Gel Premium o Card Normal */}
+              {/* RENDERIZADO DEL PRODUCTO: Gel Premium*/}
               {producto.categoria === "gel" ? (
                 <div className="wrapper-gel-premium">
                   <GelFeatured 
                     precio={producto.precio}
                     onClick={() => {
-                      setProductoSeleccionado(producto);
-                      setPage('detalle');
-                    }}
-                    hideButton={true} 
-                  />
+                    setProductoSeleccionado(producto);
+                    setPage('detalle');
+                  }}
+                 hideButton={true}
+                 // IMPORTANTE: Solo mostramos la flecha si NO es soloCard (o sea, si estamos en la sección productos)
+                showHint={!soloCard} 
+               />
                 </div>
               ) : (
                 <ProductoCard
@@ -111,7 +113,7 @@ export default function Productos({
                 />
               )}
               
-              {/* ACCIONES DE COMPRA (Solo para la sección de Gel) */}
+              {/* ACCIONES DE COMPRA*/}
               {categoriaActiva === "gel" && (
                 <div className="acciones-compra-inicio">
                   {!producto.sinStock && (
@@ -130,7 +132,6 @@ export default function Productos({
                   <button 
                     className="btn-agregar-home"
                     onClick={() => {
-                      // Pasamos el objeto 'producto' original para no perder id ni stock
                       addToCart(producto, cantidad);
                     }}
                   >
@@ -142,7 +143,7 @@ export default function Productos({
             </div>
           ))}
 
-          {/* VIDEO LATERAL (Solo se muestra en la sección de Gel completa) */}
+          {/* VIDEO LATERAL*/}
           {categoriaActiva === "gel" && !soloCard && (
             <div className="video-suelto-match vertical-mode">
               <div className="video-wrapper-home">

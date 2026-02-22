@@ -851,62 +851,56 @@ img.product {
 
 
 /* ==========================================
-   VIDEO SHOWCASE – AJUSTE DE PRECISIÓN FINAL
+   VIDEO SHOWCASE – ALTURA AJUSTADA (SIN RECORTES)
    ========================================== */
 
 .video-showcase {
   width: 100%; 
-  max-width: 1400px; 
+  max-width: 1300px; 
   margin: 20px auto; 
   display: grid;
-  grid-template-columns: 1.2fr 380px 1.2fr; 
-  gap: 25px; 
+  grid-template-columns: 1fr 320px 1fr; 
+  gap: 30px; 
+  padding: 0px;
   align-items: center; 
+  background: transparent;
 }
 
 .video-box {
   position: relative;
   width: 100%;
-  /* Subimos a 580px para dar el máximo aire vertical posible */
-  height: 580px; 
+  /* Subimos a 620px: es el equilibrio para que entre el texto 
+     sin que el video se vea gigante en la pantalla */
+  height: 500px; 
   overflow: hidden;
   border-radius: 0px;
   background: #000;
 }
 
+.video-box:nth-child(2) {
+  grid-column: 3;
+}
+
 .video-box video {
   width: 100%;
   height: 100%;
+  /* Volvemos a cover pero con más altura disponible para evitar el recorte */
   object-fit: cover; 
-  
-  /* AJUSTE MAESTRO: 110% empuja el video un poco más allá del borde inferior 
-     Esto garantiza que no quede ni un píxel de la info tapado. */
-  object-position: center 110%; 
-  
   display: block;
 }
 
-/* Ajuste para el video lateral en la sección de compra (Gel Capilar) */
-.video-suelto-match.vertical-mode .video-wrapper-home {
-  height: 560px !important; 
-  border-radius: 0px;
+/* Si quieres que el botón de volumen no quede "volando" 
+   al achicar el video, ajustamos su posición */
+.video-box .video-volume-btn {
+  bottom: 15px !important;
+  right: 20px !important;
+  font-size: 1.3rem !important;
 }
 
-.video-suelto-match.vertical-mode .video-content-home {
-  object-fit: cover;
-  /* Aplicamos el mismo empuje inferior */
-  object-position: center 110%; 
-}
-
-/* Descripción pegada para máxima visibilidad */
-.video-info-home {
-  margin-top: 5px; 
-  padding: 0 10px;
-}
-
+/* Ajuste para mobile */
 @media (max-width: 768px) {
-  .video-box, .video-suelto-match.vertical-mode .video-wrapper-home {
-    height: 500px !important;
+  .video-box {
+    height: 500px; /* Más bajo aún en móviles */
   }
 }
 
@@ -2064,16 +2058,26 @@ img.product {
   cursor: pointer;
 }
 
-/* ===== LAYOUT GEL: VIDEO SUELTO Y SIMETRÍA ===== */
+/* ============================================================
+   SECCIÓN GEL CAPILAR: LAYOUT, VIDEO Y GEL FLOTANTE 
+   ============================================================ */
 
+/* 1. LAYOUT DE LA GRILLA (Tienda) */
 @media (min-width: 1024px) {
+  .productos-title {
+    margin-bottom: 0px !important;
+    padding-bottom: 10px !important;
+  }
+
   .layout-gel-simetrico {
     display: grid !important;
     grid-template-columns: 320px 280px !important; 
     justify-content: center;
     gap: 80px !important;
     align-items: start !important; 
-    padding: 40px 0;
+    padding: 0 0 40px 0 !important;
+    margin: 0 auto !important;
+    transform: translateX(180px); 
   }
 }
 
@@ -2081,34 +2085,36 @@ img.product {
   display: flex;
   flex-direction: column;
   max-width: 320px;
-   
 }
 
+/* 2. VIDEO SHOWCASE (Sección de compra) */
 .video-suelto-match.vertical-mode {
   display: flex;
   flex-direction: column;
   height: 87%; 
   width: 280px;
-  border-radius: 16px;
+  border-radius: 0px;
+  overflow: hidden;
 }
 
 .video-wrapper-home {
-  position: relative; /* Clave para el botón de volumen */
+  position: relative;
   flex-grow: 1;
   width: 100%;
   overflow: hidden;
+  background: #000;
 }
 
 .video-content-home {
   width: 100%;
   height: 100%;
-  object-fit: contain; 
+  object-fit: cover; /* Cambiado a cover para que llene el recuadro */
   object-position: top;
 }
 
-/* INFO DEL VIDEO: CENTRADA */
+/* 3. INFO DEL VIDEO Y BOTONES */
 .video-info-home {
-  margin-top: auto; 
+  margin-top: auto;
   padding: 20px 0 0;
   text-align: center;
   display: flex;
@@ -2130,37 +2136,127 @@ img.product {
   color: #444;
 }
 
-
-/* BOTÓN DE VOLUMEN ULTRA-MINIMALISTA */
 .video-volume-btn {
-  /* Forzamos que esté arriba de todo */
-  z-index: 999 !important; 
-  position: absolute !important;
-  
-  /* Lo movemos un poco más adentro para que no lo corte el borde */
-  bottom: 25px !important;
-  right: 35px !important;
-
-  /* Estilos que ya teníamos pero reforzados */
+  z-index: 99;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.6rem; 
-  opacity: 0.6; /* Subimos un poco la opacidad inicial para probar si aparece */
-  display: flex !important; /* Nos aseguramos que no esté en 'none' */
-  align-items: center;
-  justify-content: center;
+  font-size: 1.4rem;
+  opacity: 0.6;
   text-shadow: 0px 0px 8px rgba(0,0,0,0.8);
   transition: all 0.3s ease;
-  padding: 10px;
 }
 
-.video-volume-btn:hover {
-  opacity: 1;
-  transform: scale(1.2);
+.badge-anmat-violeta {
+  display: inline-block;
+  background-color: #e8d5f2;
+  color: #4e1b69;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
 }
+
+/* 4. GEL FLOTANTE: COMPONENTE PRINCIPAL */
+.gel-featured-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  padding-top: 10px; /* Reducido para subir el gel */
+  position: relative;
+}
+
+.gel-floating-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 380px;
+}
+
+.gel-featured-image {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  z-index: 2;
+  animation: floatAnim 4s ease-in-out infinite;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
+}
+
+.gel-shadow {
+  position: absolute;
+  bottom: 40px;
+  width: 140px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: 1;
+  animation: shadowAnim 4s ease-in-out infinite;
+}
+
+
+/* AJUSTES ESPECÍFICOS PARA LA GRILLA DE COMPRA */
+.wrapper-gel-premium .gel-floating-wrapper {
+  height: 260px; 
+}
+
+.wrapper-gel-premium .gel-featured-image {
+  max-width: 250px;
+}
+
+.wrapper-gel-premium .gel-featured-info {
+  margin-top: 20px !important; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gel-featured-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: -20px;
+}
+
+.gel-featured-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--brand-purple);
+  margin-bottom: 10px;
+}
+
+.gel-featured-btn {
+  background: var(--brand-purple);
+  color: white;
+  border: none;
+  padding: 14px 45px;
+  border-radius: 50px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(78, 27, 105, 0.3);
+  transition: all 0.3s ease;
+}
+
+
+
+.gel-featured-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(78, 27, 105, 0.4);
+}
+
 
 /* BOTONES Y BADGE (Manteniendo tu estilo original) */
+
 .acciones-compra-inicio {
   margin-top: 15px;
   display: flex;
@@ -2202,156 +2298,55 @@ img.product {
   filter: brightness(1.1);
 }
 
-.badge-anmat-violeta {
-  display: inline-block;
-  background-color: #e8d5f2;
-  color: #4e1b69;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: bold;
-}
-
-
-/* ============================================================
-   SECCIÓN GEL PREMIUM - DISEÑO FLOTANTE UNIFICADO
-   ============================================================ */
-
-/* 1. CONTENEDOR GENERAL (Home y Tienda) */
-.gel-featured-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  width: 100%;
-  /* Bajamos el inicio del gel para nivelarlo con los videos laterales */
-  padding-top: 45px; 
-}
-
-/* 2. WRAPPER DE IMAGEN Y SOMBRA */
-.gel-floating-wrapper {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 400px; /* Espacio para que flote sin cortarse */
-}
-
-.gel-featured-image {
-  width: 100%;
-  max-width: 350px;
-  height: auto;
-  z-index: 2;
-  animation: floatAnim 4s ease-in-out infinite;
-  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
-}
-
-/* 3. SOMBRA PROYECTADA */
-.gel-shadow {
+/* LA FLECHA (HINT) */
+.gel-hint-wrapper {
   position: absolute;
-  bottom: 40px;
-  width: 140px;
-  height: 20px;
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 50%;
-  filter: blur(10px);
-  z-index: 1;
-  animation: shadowAnim 4s ease-in-out infinite;
-}
-
-/* 4. INFO DE PRECIO Y BOTÓN (HOME) */
-.gel-featured-info {
+  left: -110px; /* Ajustada para que no se pegue al gel */
+  top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  margin-top: -20px;
+  color: #888;
+  transform: rotate(-10deg);
+  pointer-events: none;
+  z-index: 10;
 }
 
-.gel-featured-price {
-  font-size: 2rem;
-  font-weight: 800;
+.curvy-arrow {
   color: var(--brand-purple);
-  font-family: 'Roboto', sans-serif;
+  opacity: 0.5;
 }
 
-.gel-featured-btn {
-  background: var(--brand-purple);
-  color: white;
-  border: none;
-  padding: 14px 45px;
-  border-radius: 50px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(78, 27, 105, 0.3);
-  transition: all 0.3s ease;
+.hint-text {
+  font-family: 'Dancing Script', cursive; 
+  font-size: 0.85rem;
+  line-height: 1.2;
+  text-align: center;
+  margin-top: 5px;
 }
 
-/* 5. AJUSTES ESPECÍFICOS PARA LA GRILLA DE COMPRA (Tienda) */
-.wrapper-gel-premium {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 10px;
-  /* Margen superior para que el gel baje en la sección de compra */
-  margin-top: 25px; 
-}
 
-.wrapper-gel-premium .gel-floating-wrapper {
-  height: 310px; 
-  margin-bottom: 15px;
-}
 
-.wrapper-gel-premium .gel-featured-image {
-  max-width: 290px; /* Un pelín más chico para la grilla */
-  animation: floatAnimTiendaFina 4s ease-in-out infinite;
-}
-
-.wrapper-gel-premium .gel-featured-info {
-  /* Separación sutil del precio respecto al gel */
-  margin-top: 5px !important; 
-  padding-top: 0;
-}
-
-.wrapper-gel-premium .gel-shadow {
-  /* Acercamos la sombra al objeto para realismo */
-  bottom: 15px; 
-  width: 110px;
-  opacity: 0.12;
-}
-
-/* 6. ANIMACIONES */
-
-/* Flotación Home (Más amplia) */
+/* 8. ANIMACIONES Y RESPONSIVE */
 @keyframes floatAnim {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-25px); }
+  50% { transform: translateY(-20px); }
 }
 
-/* Flotación Tienda (Más sutil y controlada) */
-@keyframes floatAnimTiendaFina {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Sincronización de Sombra */
 @keyframes shadowAnim {
   0%, 100% { transform: scale(1); opacity: 0.15; }
-  50% { transform: scale(0.6); opacity: 0.05; }
+  50% { transform: scale(0.7); opacity: 0.05; }
 }
 
-/* MODO MINIMALISTA (Para Video Showcase) */
-.modo-minimalista {
-  padding: 0 !important;
-  margin: 0 !important;
-  background: transparent !important;
-}
-
-.modo-minimalista .productos-container {
-  padding: 0 !important;
-  max-width: 100% !important;
+@media (max-width: 1024px) {
+  .layout-gel-simetrico {
+    transform: none !important;
+    margin-left: 0 !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+  }
+  .gel-hint-wrapper {
+    display: none;
+  }
 }
