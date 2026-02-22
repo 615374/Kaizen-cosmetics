@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react"
 import bannergel1 from '/assets/bannergel1.jpg'
-import bannergel2 from '/assets/bannergel2.jpeg'
-import bannergel3 from '/assets/bannergel3.jpeg'
+import bannergel2 from '/assets/bannergel2.jpg'
+import bannergel3 from '/assets/bannergel3.jpg'
 import bannergel4 from '/assets/bannergel4.jpeg'
+import bannergel5 from '/assets/bannergel5.jpeg'
 
 export default function Carousel() {
   const [current, setCurrent] = useState(0)
-  const slides = [bannergel1, bannergel2, bannergel3, bannergel4]
+  const slides = [bannergel1, bannergel2, bannergel3, bannergel5]
 
   const nextSlide = () => setCurrent(current === slides.length - 1 ? 0 : current + 1)
   const prevSlide = () => setCurrent(current === 0 ? slides.length - 1 : current - 1)

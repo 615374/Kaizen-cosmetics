@@ -850,176 +850,64 @@ img.product {
 }
 
 
-/* ==========================
-   VIDEO SHOWCASE – FULL WIDTH
-   ========================== */
+/* ==========================================
+   VIDEO SHOWCASE – AJUSTE DE PRECISIÓN FINAL
+   ========================================== */
 
 .video-showcase {
-  width: 100vw;                 /* ocupa todo el ancho real */
-  margin-left: calc(-50vw + 50%); /* rompe el contenedor */
+  width: 100%; 
+  max-width: 1400px; 
+  margin: 20px auto; 
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;                    /* separación entre videos */
-  padding: 0;                   /* sin padding lateral */
-  background: transparent;             /* opcional, queda muy By Sarac */
+  grid-template-columns: 1.2fr 380px 1.2fr; 
+  gap: 25px; 
+  align-items: center; 
 }
 
 .video-box {
   position: relative;
   width: 100%;
+  /* Subimos a 580px para dar el máximo aire vertical posible */
+  height: 580px; 
   overflow: hidden;
+  border-radius: 0px;
+  background: #000;
 }
 
 .video-box video {
   width: 100%;
-  height: 85vh;      /* más alto, más impacto */
-  max-height: 720px; /* evita exageración en pantallas grandes */
-  object-fit: cover;
-}
-
-
-/* ==========================
-   MOBILE
-   ========================== */
-
-@media (max-width: 768px) {
-  .video-showcase {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .video-box video {
-    aspect-ratio: 9 / 16;       /* formato vertical en mobile */
-  }
-
-   .video-box video {
-    height: 75vh;
-  }
-}
-
-
-
-/* ==========================
-   SECCIÓN COMPRA
-========================== */
-
-.purchase-section {
-  max-width: 1200px;
-  margin: 80px auto;
-  padding: 0 24px;
-}
-
-.purchase-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  gap: 32px;
-  max-width: 1100px;
-  margin: 0 auto;
-  align-items: stretch;
-}
-
-/* CARD PRODUCTO */
-
-.purchase-product {
-  padding: 0;
-  overflow: hidden; /* evita bordes raros */
-}
-
-/* PRODUCTO */
-.purchase-product img,
-.purchase-product canvas {
-  max-height: 800px;     /* 🔑 esto es CLAVE */
-  object-fit: contain;
-  margin: 0 auto 16px;
-}
-
-.purchase-image {
-  width: 100%;
-}
-
-.purchase-image img {
-  width: 100%;
-  height: 360px; /* ajustable */
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover; 
+  
+  /* AJUSTE MAESTRO: 110% empuja el video un poco más allá del borde inferior 
+     Esto garantiza que no quede ni un píxel de la info tapado. */
+  object-position: center 110%; 
+  
   display: block;
 }
 
-
-/* Texto */
-
-.purchase-info {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Ajuste para el video lateral en la sección de compra (Gel Capilar) */
+.video-suelto-match.vertical-mode .video-wrapper-home {
+  height: 560px !important; 
+  border-radius: 0px;
 }
 
-.purchase-title {
-  font-size: 1.4rem;
-  margin-bottom: 6px;
-}
-
-.purchase-description {
-  font-size: 0.95rem;
-  line-height: 1.4;
-  margin-bottom: 12px;
-}
-
-.purchase-price {
-  font-size: 1.3rem;
-  margin-bottom: 8px;
-}
-
-.purchase-stock {
-  font-size: 0.85rem;
-  color: #777;
-  margin-bottom: 20px;
-}
-
-.purchase-actions input {
-  width: 100%;
-  margin-bottom: 12px;
-}
-
-/* RESUMEN */
-.purchase-summary {
-  padding: 24px;
-  position: sticky;
-  top: 130px;
-}
-
-.purchase-summary h3 {
-  margin-bottom: 16px;
-  font-size: 1.2rem;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .purchase-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .purchase-summary {
-    position: static;
-  }
-}
-
-
-/* ==========================
-   RESUMEN – IMAGEN
-   ========================== */
-
-.summary-image {
-  margin-top: 24px;
-  width: 100%;
-  border-radius: 14px;
+.video-suelto-match.vertical-mode .video-content-home {
   object-fit: cover;
+  /* Aplicamos el mismo empuje inferior */
+  object-position: center 110%; 
+}
+
+/* Descripción pegada para máxima visibilidad */
+.video-info-home {
+  margin-top: 5px; 
+  padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+  .video-box, .video-suelto-match.vertical-mode .video-wrapper-home {
+    height: 500px !important;
+  }
 }
 
 
@@ -1104,9 +992,12 @@ img.product {
    USO REAL · RESULTADO REAL
    ========================== */
 
+
 .real-usage-section {
-  width: 100%;
-  padding: 80px 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 100px 0; /* Igualamos el margin-top de la sección anterior */
   background: #ffffff;
   text-align: center;
 }
@@ -1127,13 +1018,14 @@ img.product {
 .real-usage-videos {
   display: flex;
   justify-content: center;
-  gap: 36px;
+  gap: 36px;       /* Mismo gap que .usos-strip */
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 60px; /* Igualamos el padding a .usos-container */
 }
 
 .real-usage-item {
+  flex: 1;         /* Igualamos el comportamiento de .uso-item */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1145,13 +1037,20 @@ img.product {
   font-weight: 600;
   margin-bottom: 14px;
   color: #444;
+  text-transform: uppercase;
 }
 
-/* CONTENEDOR VIDEO */
+/* CONTENEDOR VIDEO FLEXIBLE */
 .real-usage-video {
-  width: 320px;              /* tamaño premium desktop */
+  width: 100%;       /* Ya no es fijo 320px, ahora llena su espacio flex */
+  max-width: 380px;  /* Límite para que no se vea gigante en monitores ultra-wide */
   aspect-ratio: 9 / 16;
   background: #000;
+  overflow: hidden;
+  display: block;
+}
+.real-usage-video {
+  position: relative !important;
   overflow: hidden;
 }
 
@@ -1161,6 +1060,29 @@ img.product {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* ==========================
+   MOBILE & TABLET (IGUALADO)
+   ========================== */
+
+@media (max-width: 1024px) {
+  .real-usage-videos {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .real-usage-videos {
+    flex-direction: column;
+    gap: 40px;
+    padding: 0 20px;
+  }
+
+  .real-usage-video {
+    max-width: 300px; /* Tamaño contenido en móvil */
+    margin: 0 auto;
+  }
 }
 
 /* ==========================
@@ -1584,9 +1506,10 @@ img.product {
 
 .detalle-info {
   text-align: left;
-  padding-left: 20px; 
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .detalle-descripcion {
@@ -1627,9 +1550,9 @@ img.product {
 
 .detalle-img-wrapper img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: none !important;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 
@@ -2141,5 +2064,294 @@ img.product {
   cursor: pointer;
 }
 
+/* ===== LAYOUT GEL: VIDEO SUELTO Y SIMETRÍA ===== */
+
+@media (min-width: 1024px) {
+  .layout-gel-simetrico {
+    display: grid !important;
+    grid-template-columns: 320px 280px !important; 
+    justify-content: center;
+    gap: 80px !important;
+    align-items: start !important; 
+    padding: 40px 0;
+  }
+}
+
+.columna-producto-gel {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+   
+}
+
+.video-suelto-match.vertical-mode {
+  display: flex;
+  flex-direction: column;
+  height: 87%; 
+  width: 280px;
+  border-radius: 16px;
+}
+
+.video-wrapper-home {
+  position: relative; /* Clave para el botón de volumen */
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+.video-content-home {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+  object-position: top;
+}
+
+/* INFO DEL VIDEO: CENTRADA */
+.video-info-home {
+  margin-top: auto; 
+  padding: 20px 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-nombre-home {
+  margin: 0;
+  color: var(--brand-purple);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.video-desc-home {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 5px 0;
+  color: #444;
+}
 
 
+/* BOTÓN DE VOLUMEN ULTRA-MINIMALISTA */
+.video-volume-btn {
+  /* Forzamos que esté arriba de todo */
+  z-index: 999 !important; 
+  position: absolute !important;
+  
+  /* Lo movemos un poco más adentro para que no lo corte el borde */
+  bottom: 25px !important;
+  right: 35px !important;
+
+  /* Estilos que ya teníamos pero reforzados */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem; 
+  opacity: 0.6; /* Subimos un poco la opacidad inicial para probar si aparece */
+  display: flex !important; /* Nos aseguramos que no esté en 'none' */
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0px 0px 8px rgba(0,0,0,0.8);
+  transition: all 0.3s ease;
+  padding: 10px;
+}
+
+.video-volume-btn:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* BOTONES Y BADGE (Manteniendo tu estilo original) */
+.acciones-compra-inicio {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selector-cantidad-home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--brand-purple);
+  border-radius: 8px;
+  padding: 5px 15px;
+}
+
+.selector-cantidad-home button {
+  background: none;
+  border: none;
+  color: var(--brand-purple);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.btn-agregar-home {
+  background-color: var(--brand-purple);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-agregar-home:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+
+.badge-anmat-violeta {
+  display: inline-block;
+  background-color: #e8d5f2;
+  color: #4e1b69;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+
+/* ============================================================
+   SECCIÓN GEL PREMIUM - DISEÑO FLOTANTE UNIFICADO
+   ============================================================ */
+
+/* 1. CONTENEDOR GENERAL (Home y Tienda) */
+.gel-featured-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  /* Bajamos el inicio del gel para nivelarlo con los videos laterales */
+  padding-top: 45px; 
+}
+
+/* 2. WRAPPER DE IMAGEN Y SOMBRA */
+.gel-floating-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 400px; /* Espacio para que flote sin cortarse */
+}
+
+.gel-featured-image {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  z-index: 2;
+  animation: floatAnim 4s ease-in-out infinite;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
+}
+
+/* 3. SOMBRA PROYECTADA */
+.gel-shadow {
+  position: absolute;
+  bottom: 40px;
+  width: 140px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: 1;
+  animation: shadowAnim 4s ease-in-out infinite;
+}
+
+/* 4. INFO DE PRECIO Y BOTÓN (HOME) */
+.gel-featured-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: -20px;
+}
+
+.gel-featured-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--brand-purple);
+  font-family: 'Roboto', sans-serif;
+}
+
+.gel-featured-btn {
+  background: var(--brand-purple);
+  color: white;
+  border: none;
+  padding: 14px 45px;
+  border-radius: 50px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(78, 27, 105, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* 5. AJUSTES ESPECÍFICOS PARA LA GRILLA DE COMPRA (Tienda) */
+.wrapper-gel-premium {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  /* Margen superior para que el gel baje en la sección de compra */
+  margin-top: 25px; 
+}
+
+.wrapper-gel-premium .gel-floating-wrapper {
+  height: 310px; 
+  margin-bottom: 15px;
+}
+
+.wrapper-gel-premium .gel-featured-image {
+  max-width: 290px; /* Un pelín más chico para la grilla */
+  animation: floatAnimTiendaFina 4s ease-in-out infinite;
+}
+
+.wrapper-gel-premium .gel-featured-info {
+  /* Separación sutil del precio respecto al gel */
+  margin-top: 5px !important; 
+  padding-top: 0;
+}
+
+.wrapper-gel-premium .gel-shadow {
+  /* Acercamos la sombra al objeto para realismo */
+  bottom: 15px; 
+  width: 110px;
+  opacity: 0.12;
+}
+
+/* 6. ANIMACIONES */
+
+/* Flotación Home (Más amplia) */
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25px); }
+}
+
+/* Flotación Tienda (Más sutil y controlada) */
+@keyframes floatAnimTiendaFina {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Sincronización de Sombra */
+@keyframes shadowAnim {
+  0%, 100% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(0.6); opacity: 0.05; }
+}
+
+/* MODO MINIMALISTA (Para Video Showcase) */
+.modo-minimalista {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+.modo-minimalista .productos-container {
+  padding: 0 !important;
+  max-width: 100% !important;
+}

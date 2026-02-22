@@ -7,6 +7,8 @@ import Productos from './components/Products'
 import ProductoDetalle from "./components/ProductDetail";
 import ProductoDetalleGel from "./components/ProductDetailGel"
 
+import GelFeatured from './components/GelFeatured';
+
 import CartDrawer from './components/CartDrawer'
 
 import PaymentSuccess from './pages/PaymentSuccess'
@@ -24,7 +26,6 @@ import  WhatsAppButton from './components/WhatsAppButton'
 import { useAuth0 } from '@auth0/auth0-react'
 
 import productImg1 from '/assets/product-1.jpg'
-import productImg2 from '/assets/product-2.jpeg'
 import productImg3 from '/assets/product-3.jpg'
 
 import video1 from '/assets/video.mp4'
@@ -40,7 +41,7 @@ const PRODUCT = {
   price: 24799,
   currency: 'ARS',
   stock: 10,
-  images: [productImg1, productImg2, productImg3]
+  images: [productImg1, productImg3]
 }
 
 export default function App() {
@@ -129,17 +130,23 @@ export default function App() {
 
         {/* DIVISOR */}
         <div className="section-divider">
-          <span>GEL CAPILAR</span>
+          <span>GEL KAIZEN</span>
         </div>
 
-        <VideoShowcase video1={video1} video2={video2} />
+        <VideoShowcase 
+         video1={video1} 
+         video2={video2} 
+         children={(
+          <GelFeatured 
+           precio={PRODUCT.price}
+           onClick={() => {
+           setProductoSeleccionado(PRODUCT);
+           setPage('detalle');
+      }}
+    />
+  )}
+/>
 
-        <PurchaseSection
-         product={PRODUCT}
-         checkout={checkout}
-         loading={loading}
-        />
-        
         
         <UsosSection usos={usos} />
 
@@ -162,9 +169,10 @@ export default function App() {
 
 
     {page === "detalle" && productoSeleccionado && (
-     productoSeleccionado.categoria === "gel" ? (
+      productoSeleccionado.tipo === "gelDetail" ? (
      <ProductoDetalleGel
        producto={productoSeleccionado}
+       addToCart={addToCart}
       
       />
     ) : (

@@ -3,32 +3,54 @@ export const productos = [
 
  {
   id: "gel-capilar",
-  nombre: "Gel Capilar Kaizen",
+  nombre: "Gel Capilar Kaizen x 250 gr.",
   categoria: "gel",
   precio: 24799,
   precioAnterior: 31899,
   descuento:22,
   sinStock: true,
-  imagen: "/assets/productos/gel-1.jpg" ,
+
+  imagen: "/assets/productos/gel-1.jpg",
+
   imagenes: [
     "/assets/productos/gel-1.jpg",
-    "/assets/productos/gel-2.jpg",
-    "/assets/productos/gel-3.jpg"
+    "/assets/productos/gel-3.jpg",
+    "/assets/productos/peinado-1.jpg",
+    "/assets/productos/peinado-2.jpg",
+    "/assets/productos/peinado-3.jpg"
   ],
-  
-  descripcion: "Aprobado por ANMAT.\n\nProducto registrado y habilitado.",
-  intro: "Textura pensada para trenzar.\n\nPermite trabajar, dividir y peinar el pelo sin esfuerzo.",
 
-  subtitulo: "Usarla te permite:",
+  descripcion: {
+    encabezado: [
+      "Aprobado por ANMAT.",
+      "Producto registrado y habilitado."
+    ],
 
-  items: [
-    "Fijación real.Mantiene todo en su lugar.💜",
-    "Apto para todo tipo de cabello.\n\nFunciona en texturas naturales, rizadas, onduladas o alisadas.🌀",
-    "No se seca demasiado rápido.\n\n Te da tiempo real para trabajar con precisión y detalle.✅",
-    "Envase resistente y práctico😉"
-  ],
-  cierre: "Libre de Parabenos, Petrolato, Siliconas y Aceite Mineral."
+    intro: "Textura pensada para trenzar. Permite trabajar, dividir y peinar el pelo sin esfuerzo.",
+
+    subtitulo: "Usarla te permite:",
+
+    items: [
+      "Fijación real. Mantiene todo en su lugar.",
+      "Apto para todo tipo de cabello. Funciona en texturas naturales, rizadas, onduladas o alisadas.",
+      "No se seca demasiado rápido. Te da tiempo real para trabajar con precisión.",
+      "Envase resistente y práctico."
+    ],
+
+    ingredientesTitulo: "Beneficios de los ingredientes",
+
+    ingredientes: [
+      "Aceite de Palta — Aporta suavidad y flexibilidad.",
+      "Aceite de Almendras — Sensación final más sedosa.",
+      "Aceite de Jojoba — Equilibrio sin sensación grasosa.",
+      "Extracto de Aloe Vera — Hidratación ligera.",
+      "Extracto de Lino — Cabello más dócil y moldeable."
+    ],
+
+    cierre: "Libre de Parabenos, Petrolato, Siliconas y Aceite Mineral."
+  }
 },
+
  
  
  {
