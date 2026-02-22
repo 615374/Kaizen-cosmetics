@@ -2154,9 +2154,9 @@ img.product {
   display: inline-block;
   background-color: #e8d5f2;
   color: #4e1b69;
-  padding: 6px 14px;
+  padding: 10px 18px;
   border-radius: 6px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: bold;
 }
 
@@ -2168,7 +2168,7 @@ img.product {
   justify-content: center;
   cursor: pointer;
   width: 100%;
-  padding-top: 10px; /* Reducido para subir el gel */
+  padding-top: 10px;
   position: relative;
 }
 
@@ -2202,36 +2202,19 @@ img.product {
   animation: shadowAnim 4s ease-in-out infinite;
 }
 
-
-/* AJUSTES ESPECÍFICOS PARA LA GRILLA DE COMPRA */
-.wrapper-gel-premium .gel-floating-wrapper {
-  height: 260px; 
-}
-
-.wrapper-gel-premium .gel-featured-image {
-  max-width: 250px;
-}
-
-.wrapper-gel-premium .gel-featured-info {
-  margin-top: 20px !important; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .gel-featured-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  margin-top: -20px;
+  gap: 0px;
+  margin-top: 0px;
 }
 
 .gel-featured-price {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: var(--brand-purple);
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .gel-featured-btn {
@@ -2247,11 +2230,27 @@ img.product {
   transition: all 0.3s ease;
 }
 
-
-
 .gel-featured-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 25px rgba(78, 27, 105, 0.4);
+}
+
+/* AJUSTES ESPECÍFICOS PARA LA GRILLA DE COMPRA */
+.wrapper-gel-premium .gel-floating-wrapper {
+  height: 260px; 
+  margin-bottom: -10px;
+}
+
+.wrapper-gel-premium .gel-featured-image {
+  max-width: 280px !important; 
+  transition: all 0.3s ease;
+}
+
+.wrapper-gel-premium .gel-featured-info {
+  margin-top: 0px !important; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -2301,12 +2300,12 @@ img.product {
 /* LA FLECHA (HINT) */
 .gel-hint-wrapper {
   position: absolute;
-  left: -110px; /* Ajustada para que no se pegue al gel */
+  left: -80px; /* Ajustada para que no se pegue al gel */
   top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #888;
+  color: #888888;
   transform: rotate(-10deg);
   pointer-events: none;
   z-index: 10;
@@ -2349,4 +2348,91 @@ img.product {
   .gel-hint-wrapper {
     display: none;
   }
+}
+
+/* ==========================================
+   RESPONSIVE: FIX PARA TABLETS Y MÓVILES
+   ========================================== */
+
+@media (max-width: 1024px) {
+  /* Quitamos el desplazamiento lateral para que todo vuelva al centro */
+  .layout-gel-simetrico {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    transform: none !important; 
+    margin: 0 auto !important;
+    gap: 40px !important;
+    padding: 20px 15px !important;
+  }
+
+  /* Ocultamos la flecha (Hint) porque no hay espacio lateral */
+  .gel-hint-wrapper {
+    display: none !important;
+  }
+
+  /* Ajustamos el tamaño del Gel para que no sea gigante en el celu */
+  .wrapper-gel-premium .gel-floating-wrapper {
+    height: 300px;
+    width: 100%;
+  }
+
+  .wrapper-gel-premium .gel-featured-image {
+    max-width: 240px;
+  }
+
+  /* El video ahora ocupa el ancho completo disponible */
+  .video-suelto-match.vertical-mode {
+    width: 100%;
+    max-width: 320px;
+    height: 450px;
+  }
+
+  /* Centramos el título en mobile por si quedó corrido */
+  .productos-title {
+    text-align: center;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Ajuste extra para celulares muy chicos (iPhone SE, etc) */
+@media (max-width: 400px) {
+  .wrapper-gel-premium .gel-featured-image {
+    max-width: 200px;
+  }
+  .gel-featured-price {
+    font-size: 1.6rem;
+  }
+}
+
+/* TIRA DE SELLOS PREMIUM */
+.gel-trust-badges {
+  margin-top: 5px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.img-sellos-calidad {
+  width: 90%;
+  max-width: 320px; /* Ajustado para que coincida con el ancho del gel */
+  height: auto;
+  opacity: 0.85;
+  filter: grayscale(20%); /* Un toque leve para que no sea un negro puro */
+  transition: opacity 0.3s ease;
+}
+
+.img-sellos-calidad:hover {
+  opacity: 1;
+}
+
+/* Ajuste de tamaño del gel en tienda */
+.wrapper-gel-premium .gel-featured-image {
+  max-width: 320px !important;
+}
+
+.wrapper-gel-premium .gel-floating-wrapper {
+  height: 380px !important;
 }

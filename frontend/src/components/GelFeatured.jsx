@@ -1,10 +1,16 @@
-export default function GelFeatured({ precio, onClick, hideButton = false, showHint = false }) {
+export default function GelFeatured({ 
+  precio, 
+  onClick, 
+  hideButton = false, 
+  hidePrice = false, // Nueva prop para controlar el signo $
+  showHint = false 
+}) {
   const imagePath = "/assets/productos/gel-flotante.png";
 
   return (
-    <div className="gel-featured-container" onClick={onClick}>
+    <div className="gel-featured-container" onClick={onClick} style={{ cursor: 'pointer' }}>
       
-      {/* La Flecha y el Texto (Solo si showHint es true) */}
+      {/* 1. FLECHA (HINT) */}
       {showHint && (
         <div className="gel-hint-wrapper">
           <svg className="curvy-arrow" width="80" height="80" viewBox="0 0 100 100">
@@ -25,14 +31,31 @@ export default function GelFeatured({ precio, onClick, hideButton = false, showH
         </div>
       )}
 
+      {/* 2. PRODUCTO Y SOMBRA */}
       <div className="gel-floating-wrapper">
         <img src={imagePath} alt="Gel Kaizen Pro" className="gel-featured-image" />
         <div className="gel-shadow"></div>
       </div>
 
+      {/* 3. INFO (PRECIO Y BOTÓN) */}
       <div className="gel-featured-info">
-        <span className="gel-featured-price">${precio?.toLocaleString()}</span>
-        {!hideButton && <button className="gel-featured-btn">LO QUIERO</button>}
+        {/* Solo mostramos el precio si NO está oculto */}
+        {!hidePrice && (
+          <span className="gel-featured-price">${precio?.toLocaleString()}</span>
+        )}
+
+        {/* El botón se mantiene si hideButton es false */}
+        {!hideButton && (
+          <button 
+            className="gel-featured-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick();
+            }}
+          >
+            LO QUIERO
+          </button>
+        )}
       </div>
     </div>
   );

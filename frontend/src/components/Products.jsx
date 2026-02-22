@@ -20,11 +20,7 @@ export default function Productos({
   soloCard = false,
 }) {
   const { addToCart } = useCart();
-  
-  // Estado para la cantidad seleccionada en esta pantalla
   const [cantidad, setCantidad] = useState(1);
-
-  // Lógica de Volumen para el Video lateral
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef(null);
 
@@ -65,45 +61,22 @@ export default function Productos({
           </>
         )}
 
-        {/* SUBCATEGORÍAS (Solo visible en herramientas y si no es soloCard) */}
-        {categoriaActiva === "herramientas" && !soloCard && (
-          <div className="subcategorias">
-            <button
-              className={!subcategoriaActiva ? "active" : ""}
-              onClick={() => setSubcategoriaActiva(null)}
-            >
-              Todas
-            </button>
-            {SUBCATEGORIAS_HERRAMIENTAS.map(sub => (
-              <button
-                key={sub.id}
-                className={subcategoriaActiva === sub.id ? "active" : ""}
-                onClick={() => setSubcategoriaActiva(sub.id)}
-              >
-                {sub.label}
-              </button>
-            ))}
-          </div>
-        )}
-
         <div className={`productos-grid ${categoriaActiva === "gel" && !soloCard ? "layout-gel-simetrico" : ""}`}>
           
           {productosFiltrados.map(producto => (
             <div key={producto.id} className="columna-producto-gel">
               
-              {/* RENDERIZADO DEL PRODUCTO: Gel Premium*/}
               {producto.categoria === "gel" ? (
                 <div className="wrapper-gel-premium">
                   <GelFeatured 
                     precio={producto.precio}
                     onClick={() => {
-                    setProductoSeleccionado(producto);
-                    setPage('detalle');
-                  }}
-                 hideButton={true}
-                 // IMPORTANTE: Solo mostramos la flecha si NO es soloCard (o sea, si estamos en la sección productos)
-                showHint={!soloCard} 
-               />
+                      setProductoSeleccionado(producto);
+                      setPage('detalle');
+                    }}
+                    hideButton={true}
+                    showHint={!soloCard} 
+                  />
                 </div>
               ) : (
                 <ProductoCard
@@ -113,37 +86,45 @@ export default function Productos({
                 />
               )}
               
-              {/* ACCIONES DE COMPRA*/}
               {categoriaActiva === "gel" && (
-                <div className="acciones-compra-inicio">
-                  {!producto.sinStock && (
-                  <div className="selector-cantidad-home">
-                    <button onClick={() => setCantidad(Math.max(1, cantidad - 1))}>-</button>
-                    <span>{cantidad}</span>
-                    <button onClick={() => setCantidad(cantidad + 1)}>+</button>
+                <>
+                  <div className="acciones-compra-inicio">
+                    {!producto.sinStock && (
+                      <div className="selector-cantidad-home">
+                        <button onClick={() => setCantidad(Math.max(1, cantidad - 1))}>-</button>
+                        <span>{cantidad}</span>
+                        <button onClick={() => setCantidad(cantidad + 1)}>+</button>
+                      </div>
+                    )}
+                    
+                    {producto.sinStock ? (
+                      <button className="btn-agregar-home btn-disabled" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+                        SIN STOCK
+                      </button>
+                    ) : (
+                      <button 
+                        className="btn-agregar-home"
+                        onClick={() => addToCart(producto, cantidad)}
+                      >
+                        AGREGAR AL CARRITO
+                      </button>
+                    )}
                   </div>
-                  )}
-                   
-                   {producto.sinStock ? (
-                   <button className="btn-agregar-home btn-disabled" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-                   SIN STOCK
-                  </button>
-                   ) : (
-                  <button 
-                    className="btn-agregar-home"
-                    onClick={() => {
-                      addToCart(producto, cantidad);
-                    }}
-                  >
-                    AGREGAR AL CARRITO
-                  </button>
-                  )}
-                </div>
+
+                  {/* TIRA DE SELLOS PREMIUM */}
+                  <div className="gel-trust-badges">
+                    <img 
+                      src="/assets/cruelty-free.png" 
+                      alt="Sellos de calidad Kaizen: Cruelty Free, Vegan, Eco Friendly" 
+                      className="img-sellos-calidad"
+                    />
+                  </div>
+                </>
               )}
             </div>
           ))}
 
-          {/* VIDEO LATERAL*/}
+          {/* VIDEO LATERAL */}
           {categoriaActiva === "gel" && !soloCard && (
             <div className="video-suelto-match vertical-mode">
               <div className="video-wrapper-home">

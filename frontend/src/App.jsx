@@ -137,18 +137,19 @@ export default function App() {
          video1={video1} 
          video2={video2} 
          children={(
-          <GelFeatured 
-           precio={PRODUCT.price}
-           showHint={false}
+          
+         <GelFeatured 
+           showHint={false} 
+           hidePrice={true}
+           hideButton={false}
            onClick={() => {
-           setProductoSeleccionado(PRODUCT);
-           setPage('detalle');
-      }}
-    />
-  )}
-/>
-
-        
+             setPage('productos'); 
+             setCategoriaActiva('gel'); 
+             window.scrollTo(0, 0);
+             }}
+          />
+         )}
+         />     
         <UsosSection usos={usos} />
 
         <RealUsageSection />
