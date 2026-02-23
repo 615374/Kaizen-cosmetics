@@ -61,94 +61,73 @@ export default function Productos({
           </>
         )}
 
-        <div className={`productos-grid ${categoriaActiva === "gel" && !soloCard ? "layout-gel-simetrico" : ""}`}>
+        <div className={`productos-grid ${categoriaActiva === "gel" && !soloCard ? "layout-gel-triple" : ""}`}>
           
           {productosFiltrados.map(producto => (
-            <div key={producto.id} className="columna-producto-gel">
-              
+            <div key={producto.id} className="grid-item-kaizen">
               {producto.categoria === "gel" ? (
-                <div className="wrapper-gel-premium">
-                  <GelFeatured 
-                    precio={producto.precio}
-                    onClick={() => {
-                      setProductoSeleccionado(producto);
-                      setPage('detalle');
-                    }}
-                    hideButton={true}
-                    showHint={!soloCard} 
-                  />
-                </div>
-              ) : (
-                <ProductoCard
-                  producto={producto}
-                  setPage={setPage}
-                  setProductoSeleccionado={setProductoSeleccionado}
-                />
-              )}
-              
-              {categoriaActiva === "gel" && (
                 <>
-                  <div className="acciones-compra-inicio">
-                    {!producto.sinStock && (
-                      <div className="selector-cantidad-home">
-                        <button onClick={() => setCantidad(Math.max(1, cantidad - 1))}>-</button>
-                        <span>{cantidad}</span>
-                        <button onClick={() => setCantidad(cantidad + 1)}>+</button>
-                      </div>
-                    )}
-                    
-                    {producto.sinStock ? (
-                      <button className="btn-agregar-home btn-disabled" disabled style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-                        SIN STOCK
-                      </button>
-                    ) : (
-                      <button 
-                        className="btn-agregar-home"
-                        onClick={() => addToCart(producto, cantidad)}
-                      >
-                        AGREGAR AL CARRITO
-                      </button>
-                    )}
+                  {/* COLUMNA 1: PEINADO */}
+                  <div className="peinado-vertical-wrapper">
+                    <img src="/assets/peinado-1.jpg" alt="Peinado" className="img-peinado-vertical" />
                   </div>
 
-                  {/* TIRA DE SELLOS PREMIUM */}
-                  <div className="gel-trust-badges">
-                    <img 
-                      src="/assets/cruelty-free.png" 
-                      alt="Sellos de calidad Kaizen: Cruelty Free, Vegan, Eco Friendly" 
-                      className="img-sellos-calidad"
-                    />
+                  {/* COLUMNA 2: INFO Y GEL */}
+                  <div className="info-compra-wrapper">
+                    <div className="wrapper-gel-premium">
+                      <GelFeatured 
+                        precio={producto.precio}
+                        onClick={() => { setProductoSeleccionado(producto); setPage('detalle'); }}
+                        hideButton={true}
+                        hidePrice={true} 
+                        showHint={!soloCard} 
+                      />
+                    </div>
+
+                    <div className="acciones-compra-inicio">
+                      {/* PRECIO CON AIRE */}
+                      <span className="gel-featured-price">${producto.precio?.toLocaleString()}</span>
+                      
+                      {!producto.sinStock && (
+                        <div className="selector-cantidad-home">
+                          <button onClick={() => setCantidad(Math.max(1, cantidad - 1))}>-</button>
+                          <span>{cantidad}</span>
+                          <button onClick={() => setCantidad(cantidad + 1)}>+</button>
+                        </div>
+                      )}
+                      
+                      <button 
+                        className={`btn-agregar-home ${producto.sinStock ? 'btn-disabled' : ''}`}
+                        disabled={producto.sinStock}
+                        onClick={() => !producto.sinStock && addToCart(producto, cantidad)}
+                      >
+                        {producto.sinStock ? 'SIN STOCK' : 'AGREGAR AL CARRITO'}
+                      </button>
+
+                      {/* SELLOS CON MÁS MARGEN ABAJO */}
+                      <div className="gel-trust-badges">
+                        <img src="/assets/cruelty-free.png" alt="Sellos" className="img-sellos-calidad" />
+                      </div>
+                    </div>
                   </div>
                 </>
+              ) : (
+                <ProductoCard producto={producto} setPage={setPage} setProductoSeleccionado={setProductoSeleccionado} />
               )}
             </div>
           ))}
 
-          {/* VIDEO LATERAL */}
+          {/* COLUMNA 3: VIDEO */}
           {categoriaActiva === "gel" && !soloCard && (
             <div className="video-suelto-match vertical-mode">
               <div className="video-wrapper-home">
-                <video
-                  ref={videoRef}
-                  src="/assets/productos/video-gel.mp4"
-                  autoPlay
-                  muted={isMuted}
-                  loop
-                  playsInline
-                  className="video-content-home"
-                />
-                <button className="video-volume-btn" onClick={toggleMute}>
-                  {isMuted ? "🔇" : "🔊"}
-                </button>
+                <video ref={videoRef} src="/assets/productos/video-gel.mp4" autoPlay muted={isMuted} loop playsInline className="video-content-home" />
+                <button className="video-volume-btn" onClick={toggleMute}>{isMuted ? "🔇" : "🔊"}</button>
               </div>
               <div className="video-info-home">
                 <h3 className="video-nombre-home">Fijación Profesional</h3>
-                <p className="video-desc-home">
-                  Textura ideal para trenzas y peinados de alta precisión.
-                </p>
-                <div className="badge-wrapper-anmat">
-                   <span className="badge-anmat-violeta">Aprobado por ANMAT</span>
-                </div>
+                <p className="video-desc-home">Textura ideal para trenzas y peinados de alta precisión.</p>
+                <div className="badge-wrapper-anmat"><span className="badge-anmat-violeta">Aprobado por ANMAT</span></div>
               </div>
             </div>
           )}
