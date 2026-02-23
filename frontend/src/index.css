@@ -425,122 +425,6 @@ body {
   padding: 0 20px;
 }
 
-/* Cards */
-.card {
-  background: white;
-  border-radius: 14px;
-  padding: 14px; 
-  box-shadow: 0 8px 22px rgba(0,0,0,0.10);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  width: 100%;
-}
-
-.card:hover {
-  transform: translateY(-4px); 
-  box-shadow: 0 14px 32px rgba(0,0,0,0.16);
-}
-
-
-/* lateral de imágenes */
-.uso-lateral { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 14px; 
-  width: 100%;
-}
-
-.uso-card { 
-  background: #faf6ff;
-  border-radius: 12px; 
-  padding: 8px; 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.10); 
-  transition: transform 0.22s ease, box-shadow 0.22s ease; 
-}
-
-.uso-card:hover { 
-  transform: translateY(-3px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.14); 
-}
-
-.uso-img { 
-  width: 100%; 
-  height: auto; 
-  max-height: 220px; 
-  object-fit: cover; 
-  border-radius: 10px; 
-}
-
-.uso-text {
-  font-size: 0.95rem; 
-  font-weight: 500;   
-  color: var(--brand-purple);
-  margin: 8px 0 0 0;
-  padding: 0 4px;
-  text-align: center;
-  line-height: 1.35;
-  display: block;
-  letter-spacing: 0.4px;
-}
-
-.product-card {
-  padding-bottom: 14px; 
-}
-
-img.product {
-  width: 100%;
-  height: 200px;        
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-
-/* texto y botones */
-
-.title {
-  font-size: 1rem;
-  margin: 8px 0 4px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-.price {
-  font-size: 0.90rem;
-  font-weight: 600;
-  margin: 2px 0 10px;
-}
-
-
-.btn {
-  background: var(--brand-purple);
-  color: white;
-  padding: 9px 12px; 
-  border: none;
-  border-radius: 8px; 
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: transform .15s ease, box-shadow .15s ease;
-  width: 100%;
-}
-
-.btn:hover { 
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-}
-
-.small { 
-  font-size: 0.75rem; 
-  color: #777; 
-  letter-spacing: 0.3px;
-}
-
-/* summary card tweaks */
-.summary-card { 
-  position: relative; 
-  width: 100%; 
-}
-
-
 
 /* FOOTER */
 .footer {
@@ -942,6 +826,7 @@ img.product {
 
 .uso-item {
   flex: 1;
+  cursor: pointer;
 }
 
 .uso-item img {
@@ -949,7 +834,9 @@ img.product {
   height: 420px;
   object-fit: cover;
   display: block;
+  transition: opacity 0.3s ease-in-out; 
 }
+
 
 .uso-item p {
   margin-top: 14px;
@@ -2077,7 +1964,7 @@ img.product {
 .video-suelto-match.vertical-mode {
   display: flex;
   flex-direction: column;
-  height: 87%; 
+  height: 480px; 
   width: 280px;
   border-radius: 16px;
   overflow: hidden;
@@ -2442,18 +2329,19 @@ img.product {
 }
 
 /* IMAGEN VERTICAL*/
+
 .peinado-vertical-wrapper {
-  width: 100%;
-  height: 480px; 
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  height: auto !important; /* Cambiamos a auto para que crezca con el texto */
+  overflow: visible !important; /* Importante para que no corte el badge de ANMAT */
 }
 
 .img-peinado-vertical {
   width: 100%;
-  height: 100%;
+  height: 400px; /* Mantenemos la altura fija solo en la imagen */
   object-fit: cover;
+  border-radius: 15px;
 }
 
 /* INFO COMPRA*/
@@ -2469,7 +2357,7 @@ img.product {
 .video-suelto-match.vertical-mode {
   grid-column: span 1;
   width: 100%;
-  height: 600px !important; 
+  height: 560px !important; 
   margin: 0 !important;
 }
 
@@ -2489,5 +2377,27 @@ img.product {
     grid-column: span 1;
     grid-template-columns: 1fr;
   }
+}
+
+/* FORZAR CURSOR DE BLOQUEO EN SIN STOCK */
+.btn-agregar-home:disabled,
+.btn-agregar-home.btn-disabled {
+  background-color: #d1d1d1 !important;
+  color: #757575 !important;
+  /* El secreto es forzar que detecte el mouse pero con el cursor prohibido */
+  cursor: not-allowed !important; 
+  pointer-events: all !important; 
+  box-shadow: none !important;
+  transform: none !important;
+  filter: grayscale(1) !important;
+  opacity: 0.8;
+}
+
+/* Evitar cualquier efecto de hover si está deshabilitado */
+.btn-agregar-home:disabled:hover,
+.btn-agregar-home.btn-disabled:hover {
+  background-color: #d1d1d1 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
 }
 
