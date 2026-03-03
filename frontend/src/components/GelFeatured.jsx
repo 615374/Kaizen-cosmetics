@@ -10,7 +10,7 @@ export default function GelFeatured({
   return (
     <div className="gel-featured-container" onClick={onClick} style={{ cursor: 'pointer' }}>
       
-      {/* 1. FLECHA (HINT) */}
+      {/*FLECHA (HINT) */}
       {showHint && (
         <div className="gel-hint-wrapper">
           <svg className="curvy-arrow" width="80" height="80" viewBox="0 0 100 100">
@@ -31,13 +31,13 @@ export default function GelFeatured({
         </div>
       )}
 
-      {/* 2. PRODUCTO Y SOMBRA */}
+      {/* PRODUCTO Y SOMBRA */}
       <div className="gel-floating-wrapper">
         <img src={imagePath} alt="Gel Kaizen Pro" className="gel-featured-image" />
         <div className="gel-shadow"></div>
       </div>
 
-      {/* 3. INFO (PRECIO Y BOTÓN) */}
+      {/* INFO (PRECIO Y BOTÓN) */}
       <div className="gel-featured-info">
         {/* Solo mostramos el precio si NO está oculto */}
         {!hidePrice && (

@@ -426,6 +426,27 @@ body {
 }
 
 
+/* SECCION NOSOTROS */
+
+.section-nosotros {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px auto;
+  padding: 0 40px;
+  width: 100%;
+  gap: 10px;
+}
+
+.section-nosotros span {
+  font-size: 1.7rem;      
+  font-weight: 600;
+  color: var(--brand-purple);
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+}
+
+
 /* FOOTER */
 .footer {
   text-align: center;
@@ -452,6 +473,61 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* --- ESTILOS COLUMNA CENTRAL (ENVÍOS + REDES) --- */
+.central-col {
+  display: flex !important;
+  flex-direction: column !important; 
+  align-items: center !important;   
+  justify-content: flex-start !important;
+  gap: 30px !important;    
+  text-align: center;
+}
+
+.shipping-wrapper, 
+.social-footer-section {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.social-icons-row {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  margin-top: 0px !important;
+}
+
+.social-icons-row a {
+  color: white !important;
+  font-size: 1.6rem;
+  transition: all 0.3s ease;
+}
+
+.social-icons-row a:hover {
+  color: var(--brand-mint) !important;
+  transform: scale(1.1);
+}
+
+/* --- SECCIÓN INFERIOR (COPYRIGHT + GITHUB) --- */
+.footer-bottom {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-copyright {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 10px;
+}
+
+/* -------------------------------------------- */
 
 .footer-section h4 {
   font-family: "Inter", "Roboto", sans-serif;
@@ -570,6 +646,53 @@ body {
   color: #ddd;
   letter-spacing: 0.5px;
 }
+
+.footer-bottom {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Sección de firma en la columna de contacto */
+.dev-footer-section {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dev-footer-section h4 {
+  color: var(--brand-mint); /* Usamos el verde oficial */
+  font-family: "Inter", "Roboto", sans-serif;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.dev-icon-row a {
+  color: white;
+  font-size: 1.3rem; /* Mismo tamaño que Instagram/TikTok */
+  transition: transform 0.25s ease, color 0.25s ease;
+  display: flex;
+}
+
+.dev-icon-row a:hover {
+  color: var(--brand-mint);
+  transform: scale(1.15);
+}
+
+/* Limpieza del copyright inferior */
+.footer-copyright {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  color: #ddd;
+  text-align: center;
+}
+
 
 /* Responsive footer */
 @media (max-width: 900px) {
@@ -991,6 +1114,89 @@ body {
 
 
 /* ==========================
+   TESTIMONIOS SECTION
+========================== */
+
+.testimonios-section {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 100px 0; 
+  background: #ffffff;
+  text-align: center;
+  margin-top: 0;
+}
+
+.testimonios-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px; 
+}
+
+.testimonios-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  margin-top: 0;
+  margin-bottom: 65px; 
+  color: var(--brand-purple);
+  text-transform: uppercase;
+}
+
+.testimonios-grid {
+  display: grid;
+  gap: 36px; 
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .testimonios-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .testimonios-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.testimonio-card {
+  background-color: #101010; 
+  border-radius: 12px; 
+  padding: 10px; 
+  height: 200px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden; 
+}
+
+.testimonio-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.testimonio-card img {
+  width: 100%; 
+  height: 100%;
+  object-fit: contain; 
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .testimonios-container {
+    padding: 0 20px;
+  }
+  .testimonios-section {
+    padding: 60px 0;
+  }
+}
+
+
+/* ==========================
   NAVBAR PRODUCTOS
 ========================== */
 
@@ -1348,13 +1554,19 @@ body {
 
 /* WRAPPER PRODUCT DETAIL */
 .producto-detalle-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 24px;
+  padding: 40px 0;
+  background-color: #fff;
+  min-height: auto; 
 }
 
+.producto-detalle {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
 
-/* PRODUCT DETAIL */
 
 .detalle-precios {
   display: flex;
@@ -1382,11 +1594,9 @@ body {
 }
 
 .detalle-info {
-  text-align: left;
-  padding-left: 20px;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  min-width: 0;
 }
 
 .detalle-descripcion {
@@ -1412,11 +1622,6 @@ body {
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
-
-/* ==========================
-   PRODUCT DETAIL
-   ========================== */
-
 .detalle-img-wrapper {
   background: #ffffff;
   border-radius: 20px;
@@ -1424,14 +1629,12 @@ body {
   position: relative;
 }
 
-
 .detalle-img-wrapper img {
   width: 100%;
   height: auto;
   object-fit: contain;
   display: block;
 }
-
 
 /*BOTON AGRGEAR AL CARRITO*/
 
@@ -1476,37 +1679,6 @@ body {
   min-width: 24px;
   text-align: center;
   font-weight: 500;
-}
-
-.producto-descripcion-extendida {
-  margin-top: 20px;   
-  padding-top: 20px;
-  border-top: 1px solid #eee;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #642480
-}
-
-.producto-descripcion-extendida p {
-  color: #642480;
-  white-space: pre-line;
-}
-
-
-.producto-descripcion-extendida h4 {
-  margin: 1.5rem 0 0.5rem;
-  color: #642480,
-}
-
-.producto-descripcion-extendida ul {
-  padding-left: 1.2rem;
-  margin-bottom: 1.5rem;
-  color: #642480,
-}
-
-.producto-descripcion-extendida li {
-  margin-bottom: 0.2rem;
-  list-style: disc;
 }
 
 
@@ -2401,3 +2573,238 @@ body {
   transform: none !important;
 }
 
+
+/* --- SISTEMA DE COLORES PRODUCTO DETALLE --- */
+
+/* DESCRIPCIÓN EXTENDIDA */
+.producto-descripcion-extendida {
+  margin-top: 30px;   
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  width: 100%;
+  white-space: pre-line;
+  color: #4e1b69;
+  height: auto !important;
+  overflow: visible !important;
+  display: block !important;
+}
+
+
+.contenedor-propiedad {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El título usa la variable inyectada por React */
+.propiedad-titulo {
+  color: var(--color-acento, #1e1e1e) !important;
+  font-weight: 900 !important;
+  font-size: 1rem !important;
+  line-height: 1.2;
+}
+
+.propiedad-detalle {
+  color: #666 !important;
+  font-size: 0.92rem !important;
+  font-weight: 400 !important;
+  margin-top: 4px;
+  white-space: pre-line;
+}
+
+.subtitulo-kaizen {
+  color: #4e1b69;
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin: 30px 0 20px;
+}
+
+.divisor-cierre {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.texto-cierre-final {
+  color: #4e1b69;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-top: 20px;
+}
+
+/* --- ESTILO FINAL KAIZEN GEL --- */
+.kaizen-desc-final {
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+  text-align: left;
+}
+
+.kaizen-bloque {
+  margin-bottom: 25px;
+}
+
+.kaizen-item {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.kaizen-subtexto {
+  color: #666 !important;
+  font-size: 0.92rem !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* Bullets Violetas */
+.kaizen-item.has-bullet {
+  padding-left: 20px;
+}
+
+.kaizen-item.has-bullet::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #4e1b69;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.kaizen-titulo-seccion {
+  color: #4e1b69 !important;
+  font-size: 1.15rem !important;
+  font-weight: 900 !important;
+  margin: 35px 0 20px 0 !important;
+  text-transform: none !important;
+}
+
+.kaizen-cierre {
+  color: #4e1b69 !important;
+  font-weight: 700 !important;
+  margin-top: 30px !important;
+  border-top: 1px solid #f0f0f0 !important;
+  padding-top: 20px !important;
+}
+
+
+/*ENVIOS SHIPNOW*/
+
+/* Contenedor principal de la sección de envío */
+.shipping-section {
+  margin-top: 20px;
+  padding: 20px 15px;
+  border-top: 1px solid #f0f0f0;
+  background-color: #fafafa; /* Un fondo sutil para diferenciarlo de los productos */
+}
+
+.shipping-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Grupo de Input y Botón */
+.shipping-input-wrapper {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.shipping-input-wrapper input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.shipping-input-wrapper input:focus {
+  border-color: #4b1b63; /* El violeta de Kaizen */
+}
+
+.shipping-input-wrapper button {
+  padding: 10px 18px;
+  background-color: #4b1b63;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.shipping-input-wrapper button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mensajes de error */
+.shipping-error {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/* Resultados de Shipnow/Andreani */
+.shipping-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shipping-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.shipping-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.courier-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4b1b63;
+}
+
+.service-name {
+  font-size: 12px;
+  color: #666;
+}
+
+.shipping-price {
+  font-size: 15px;
+  color: #333;
+  font-weight: 700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.shipping-item.active {
+  background-color: #f3e5f5; /* Un violeta muy claro */
+  border: 2px solid #4b1b63 !important;
+  transform: scale(1.02);
+  transition: all 0.2s ease;
+}
+
+.shipping-item:hover {
+  background-color: #f9f9f9;
+}

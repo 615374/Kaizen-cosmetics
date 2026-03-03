@@ -4,8 +4,10 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const mercadopago = require('mercadopago')
 const { sendPurchaseEmail } = require('./utils/mailer');
+const axios = require('axios'); 
 
 
+// --- ENDPOINTS MERCADOPAGO ---
 
 const app = express()
 app.use(cors())
@@ -154,3 +156,62 @@ app.get("/api/payment/:id", async (req, res) => {
 });
 
 app.listen(PORT, ()=>console.log('Server running on port', PORT))
+
+
+
+
+// --- ENDPOINT SHIPNOW: COTIZACIÓN ---
+
+// --- ENDPOINT SHIPNOW: COTIZACIÓN CORREGIDO ---
+app.post('/api/shipping/quote', async (req, res) => {
+  try {
+    const { cpDestino } = req.body;
+    const TOKEN = process.env.SHIPNOW_TOKEN; // Asegurate que en el .env diga SHIPNOW_TOKEN=A9l9aGPsmi...
+
+    console.log("--- DEBUG SHIPNOW REQUEST ---");
+    console.log("CP Destino:", cpDestino);
+    
+    // 1. URL Correcta: Para estimaciones se usa /shipping_options/estimate
+    const response = await axios.post('https://api.shipnow.com.ar/shipping_options/estimate', {
+      zip_code: String(cpDestino),
+      items: [
+        {
+          weight: 0.5, // Peso en kg (ajustar según tus productos de Kaizen)
+          quantity: 1
+        }
+      ]
+    }, {
+      headers: {
+        'Authorization': `Bearer ${TOKEN}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    });
+
+    console.log("--- DEBUG SHIPNOW RESPONSE ---");
+    // Según tu doc, si devuelven un listado, viene dentro de "results"
+    const dataRaw = response.data.results || response.data; 
+    console.log("Datos a procesar:", JSON.stringify(dataRaw, null, 2));
+
+    // 2. Mapeo adaptado a la respuesta real de Shipnow
+    // Nota: Verificamos si es un array antes de mapear
+    const opciones = Array.isArray(dataRaw) ? dataRaw.map(opt => ({
+      correo: opt.courier_name || "Correo",
+      servicio: opt.name || "Estándar",
+      costo: opt.price || 0,
+      id: opt.id
+    })) : [];
+
+    res.json(opciones);
+
+  } catch (error) {
+    // 3. Manejo de errores según el formato de la doc (vienen en un array "errors")
+    const shipnowErrors = error.response?.data?.errors;
+    console.error("ERROR SHIPNOW:", shipnowErrors || error.message);
+    
+    res.status(error.response?.status || 500).json({ 
+      error: "No se pudo cotizar con Shipnow",
+      details: shipnowErrors 
+    });
+  }
+});

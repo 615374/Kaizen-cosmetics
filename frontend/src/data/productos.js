@@ -1,57 +1,40 @@
 export const productos = [
 
 
- {
+{
   id: "gel-capilar",
   nombre: "Gel Capilar Kaizen x 250 gr.",
   categoria: "gel",
   precio: 24799,
   precioAnterior: 31899,
-  descuento:22,
+  descuento: 22,
   sinStock: true,
-
-  imagen: "/assets/productos/gel-1.jpg",
-
+  imagen: "/assets/productos/gel-flotante.png",
   imagenes: [
+    "/assets/productos/gel-flotante.png",
     "/assets/productos/gel-1.jpg",
     "/assets/productos/gel-3.jpg",
     "/assets/productos/peinado-1.jpg",
     "/assets/productos/peinado-2.jpg",
     "/assets/productos/peinado-3.jpg"
   ],
-
   descripcion: {
-    encabezado: [
-      "Aprobado por ANMAT.",
-      "Producto registrado y habilitado."
-    ],
-
-    intro: "Textura pensada para trenzar. Permite trabajar, dividir y peinar el pelo sin esfuerzo.",
-
-    subtitulo: "Usarla te permite:",
-
+    
+    intro: "Aprobado por ANMAT 💜\nProducto registrado y habilitado.\n\nTextura pensada para trenzar\nPermite trabajar, dividir y peinar el pelo sin esfuerzo.",
+    
+    subtitulo: "Beneficios y usos", 
+    
     items: [
-      "Fijación real. Mantiene todo en su lugar.",
-      "Apto para todo tipo de cabello. Funciona en texturas naturales, rizadas, onduladas o alisadas.",
-      "No se seca demasiado rápido. Te da tiempo real para trabajar con precisión.",
-      "Envase resistente y práctico."
+      "Fijación real\nMantiene todo en su lugar.",
+      "Apto para todo tipo de cabello\nFunciona en texturas naturales, rizadas, onduladas o alisadas.",
+      "No se seca demasiado rápido\nTe da tiempo real para trabajar con precisión y detalle.",
+      "Envase resistente y práctico"
     ],
 
-    ingredientesTitulo: "Beneficios de los ingredientes",
-
-    ingredientes: [
-      "Aceite de Palta — Aporta suavidad y flexibilidad.",
-      "Aceite de Almendras — Sensación final más sedosa.",
-      "Aceite de Jojoba — Equilibrio sin sensación grasosa.",
-      "Extracto de Aloe Vera — Hidratación ligera.",
-      "Extracto de Lino — Cabello más dócil y moldeable."
-    ],
-
-    cierre: "Libre de Parabenos, Petrolato, Siliconas y Aceite Mineral."
+    cierre: "Beneficios de los ingredientes\n\nAceite de Palta 🥑\nAporta suavidad y sensación de flexibilidad en la fibra.\n\nAceite de Almendras 🫘\nContribuye a una sensación final más sedosa.\n\nAceite de Jojoba 🍈\nAporta equilibrio sin dejar sensación grasosa.\n\nExtracto de Aloe Vera 🪴\nDeja una sensación de hidratación ligera y cómoda en la hebra.\n\nExtracto de Lino 💛\nAyuda a dejar el cabello más dócil y moldeable.\n\nLibre de Parabenos, Petrolato, Siliconas y Aceite Mineral."
   }
-},
+ },
 
- 
  
  {
   id: 2,

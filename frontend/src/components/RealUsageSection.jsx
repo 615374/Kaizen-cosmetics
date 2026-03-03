@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import resultadoVideo from "/assets/resultadoVideo.mp4";
+import resultadoVideo from "/assets/peinado-full-red.mp4";
 import resultadoVideo2 from "/assets/resultadoVideo2.mp4";
 import usoVideo from "/assets/usoVideo.mp4";
 
@@ -45,7 +45,7 @@ export default function RealUsageSection() {
       <div className="real-usage-videos">
         {/* ITEM 1 */}
         <div className="real-usage-item">
-          <p className="real-usage-label">TESTIMONIO · USO</p>
+          <p className="real-usage-label">❤️‍🔥TESTIMONIO · USO ❤️‍🔥</p>
           <div className="real-usage-video">
             <video
               ref={videoRef1}
@@ -64,11 +64,11 @@ export default function RealUsageSection() {
 
         {/* ITEM 2 */}
         <div className="real-usage-item">
-          <p className="real-usage-label">TESTIMONIO · DURACIÓN</p>
+          <p className="real-usage-label">🔥PEINADO · KAIZEN 😏🔥</p>
           <div className="real-usage-video">
             <video
               ref={videoRef2}
-              src={usoVideo}
+              src={resultadoVideo}
               autoPlay
               muted={muted2}
               loop
@@ -83,11 +83,11 @@ export default function RealUsageSection() {
 
         {/* ITEM 3 */}
         <div className="real-usage-item">
-          <p className="real-usage-label">RESULTADO · FINAL</p>
+          <p className="real-usage-label">💜TESTIMONIO · DURACIÓN 💜</p>
           <div className="real-usage-video">
             <video
               ref={videoRef3}
-              src={resultadoVideo}
+              src={usoVideo}
               autoPlay
               muted={muted3}
               loop
