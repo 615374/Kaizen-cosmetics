@@ -97,7 +97,7 @@ export default function CartDrawer({ setCartOpen, setPage, onShippingChange }) {
 
           {/* --- CALCULADOR DE ENVÍO --- */}
           <div className="shipping-section">
-            <p className="shipping-title">Cálculo de Envío (Andreani)</p>
+            <p className="shipping-title">Cálculo de Envío</p>
             
             <div className="shipping-input-wrapper">
               <input

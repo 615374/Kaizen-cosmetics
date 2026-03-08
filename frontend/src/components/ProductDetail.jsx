@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useCart } from "../context/CartContext";
+import { productos } from "../data/productos";
+import ProductoCard from "./ProductCard";
 
 function buildGallery(producto) {
   if (producto.variantes && producto.variantes.length > 0) {
@@ -28,6 +30,7 @@ const formatLabel = text =>
 export default function ProductoDetalle({
   producto,
   setPage,
+  setProductoSeleccionado,
   setCategoriaActiva,
   setSubcategoriaActiva,
 }) {
@@ -38,6 +41,10 @@ export default function ProductoDetalle({
   const [activeIndex, setActiveIndex] = useState(0);
   const [varianteActiva, setVarianteActiva] = useState(null);
   const [cantidad, setCantidad] = useState(1);
+
+  const relacionados = productos
+    .filter(p => p.id !== producto.id)
+    .slice(0, 4);
 
   useEffect(() => {
     const unifiedGallery = buildGallery(producto);
@@ -51,6 +58,7 @@ export default function ProductoDetalle({
       setActiveIndex(0);
     }
     setCantidad(1);
+    window.scrollTo(0, 0);
   }, [producto]);
 
   const requiereVariante = producto.variantes?.length > 0;
@@ -82,11 +90,9 @@ export default function ProductoDetalle({
 
   const imagenPrincipal = activeIndex === -1 ? producto.imagen : gallery[activeIndex]?.src;
 
-  // --- LÓGICA DE RENDERIZADO KAIZEN (COLORES Y NEGRITAS) ---
   const renderContenidoLimpio = (texto) => {
     if (!texto) return null;
 
-    // Diccionario de colores para el Gel
     const colores = {
       "ANMAT": "#c469d4",
       "Palta": "#30ad36",
@@ -97,16 +103,13 @@ export default function ProductoDetalle({
       "Textura": "#4e1b69"
     };
 
-    // Si el producto NO es el gel, devolvemos el texto normal para no romper otros productos
     if (producto.id !== "gel-capilar") {
       return <span>{texto}</span>;
     }
 
-    // Dividimos la línea en Título y Detalle (si hay salto de línea)
     const [titulo, ...detalle] = texto.split('\n');
-    let colorFinal = "#4b4949"; // Negro por defecto
+    let colorFinal = "#4b4949";
 
-    // Buscamos si el título contiene alguna palabra clave
     Object.keys(colores).forEach(key => {
       if (titulo.includes(key)) colorFinal = colores[key];
     });
@@ -227,9 +230,8 @@ export default function ProductoDetalle({
             )}
           </div>
 
-          {/* DESCRIPCIÓN DINÁMICA CON LÓGICA DE COLORES */}
+          {/* DESCRIPCIÓN DINÁMICA */}
           <section className="producto-descripcion-extendida">
-            
             {/* Intro */}
             {producto.descripcion?.intro && (
               <div className="desc-bloque">
@@ -268,6 +270,21 @@ export default function ProductoDetalle({
               </div>
             )}
           </section>
+        </div>
+      </section>
+
+      {/* SECCIÓN: TAMBIÉN PODRÍA INTERESARTE */}
+      <section className="relacionados-section">
+        <h2 className="relacionados-title">También podría interesarte</h2>
+        <div className="relacionados-grid">
+          {relacionados.map((item) => (
+            <ProductoCard 
+              key={item.id} 
+              producto={item} 
+              setPage={setPage} 
+              setProductoSeleccionado={setProductoSeleccionado} 
+            />
+          ))}
         </div>
       </section>
     </section>

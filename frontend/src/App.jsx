@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+
 import Navbar from './components/Navbar'
 
 import Carousel from './components/Carousel'
@@ -17,9 +18,12 @@ import UsosSection from "./components/UsosSection"
 import { usos } from "./data/usos";
 import RealUsageSection from "./components/RealUsageSection"
 
+import MayoristaForm from './components/MayoristaForm'
+
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useCart } from "./context/CartContext" // Importamos el hook del carrito
 
 import productImg1 from '/assets/product-1.jpg'
 import productImg3 from '/assets/product-3.jpg'
@@ -27,47 +31,52 @@ import video1 from '/assets/video.mp4'
 import video2 from '/assets/video2.mp4'
 import Testimonios from './components/Testimonios'
 
-const PRODUCT = {
-  id: 'kaizen-gel-500g',
-  name: 'Kaizen — Gel Capilar 500g',
-  description: 'Gel para trenzas. Fijación duradera, sin residuos. 500 g. Ideal para styling y trenzados.',
-  price: 24799,
-  currency: 'ARS',
-  stock: 10,
-  images: [productImg1, productImg3]
-}
+import { productos } from "./data/productos"
+import ProductoCard from "./components/ProductCard"
 
 export default function App() {
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState('inicio')
   const { isAuthenticated, loginWithRedirect } = useAuth0()
+  const { cart } = useCart() // Obtenemos los productos reales del carrito
+  
   const [categoriaActiva, setCategoriaActiva] = useState("gel");
   const [subcategoriaActiva, setSubcategoriaActiva] = useState(null);
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
+  const [shippingCost, setShippingCost] = useState(0);
+  const [terminoBusqueda, setTerminoBusqueda] = useState("");
+  const [productosAleatorios, setProductosAleatorios] = useState([]);
 
-  // --- LOGÍSTICA: ESTADO PARA EL ENVÍO ---
-  const [shippingCost, setShippingCost] = useState(0); 
-  const [cartQty, setCartQty] = useState(1); // Control de cantidad
+  // --- LÓGICA DE PRODUCTOS ALEATORIOS PARA "TAMBIÉN PODRÍA INTERESARTE" ---
+  useEffect(() => {
+    const soloHerramientas = productos.filter(p => p.id !== "gel-capilar");
+    const shuffled = [...soloHerramientas].sort(() => 0.5 - Math.random()).slice(0, 4);
+    setProductosAleatorios(shuffled);
+  }, [page]);
 
+  // --- FUNCIÓN DE CHECKOUT (MERCADO PAGO PRODUCCIÓN) ---
   async function checkout() {
     if (!isAuthenticated) {
       return loginWithRedirect({ appState: { returnTo: window.location.pathname } })
     }
-    
+
+    if (cart.length === 0) {
+      alert("El carrito está vacío");
+      return;
+    }
+
     setLoading(true)
     try {
-      // Preparamos el array de ítems para Mercado Pago
-      const itemsParaPago = [
-        { 
-          id: PRODUCT.id, 
-          title: PRODUCT.name, 
-          quantity: cartQty, 
-          unit_price: PRODUCT.price 
-        }
-      ];
+      // Mapeamos los productos actuales del carrito para Mercado Pago
+      const itemsParaPago = cart.map(item => ({
+        id: item.id,
+        title: item.nombre,
+        quantity: item.quantity,
+        unit_price: item.precio
+      }));
 
-      // Si el usuario seleccionó un envío, lo sumamos como un ítem más
+      // Si hay costo de envío, lo agregamos como un ítem adicional
       if (shippingCost > 0) {
         itemsParaPago.push({
           id: 'envio-shipnow',
@@ -77,6 +86,7 @@ export default function App() {
         });
       }
 
+      // Llamada al backend
       const res = await fetch('/api/create_preference', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -84,20 +94,25 @@ export default function App() {
       })
 
       const data = await res.json()
-      
-      if (data && data.sandbox_init_point) {
-        window.location.href = data.sandbox_init_point
+
+      // 4. Redirección (Usamos init_point para producción)
+      if (data && data.init_point) {
+        window.location.href = data.init_point;
+      } else if (data && data.sandbox_init_point) {
+        // Backup por si todavía estás en modo pruebas
+        window.location.href = data.sandbox_init_point;
       } else {
         alert("Error: No se pudo generar el link de pago.");
       }
     } catch (err) {
-      console.error(err)
-      alert('Error en el proceso de pago.')
+      console.error("Error en checkout:", err)
+      alert('Hubo un problema al procesar el pago.')
     } finally {
       setLoading(false)
     }
   }
 
+  // --- MANEJO DE RUTAS POST-PAGO ---
   useEffect(() => {
     const path = window.location.pathname;
     if (path === "/success") setPage("success");
@@ -112,6 +127,7 @@ export default function App() {
         setCategoriaActiva={setCategoriaActiva}
         setSubcategoriaActiva={setSubcategoriaActiva}
         setCartOpen={setCartOpen}
+        setTerminoBusqueda={setTerminoBusqueda}
       />
 
       {page === 'inicio' && (
@@ -139,6 +155,21 @@ export default function App() {
           />     
           <UsosSection usos={usos} />
           <RealUsageSection />
+
+          <section className="relacionados-section">
+            <h2 className="relacionados-title">También podría interesarte</h2>
+            <div className="relacionados-grid">
+              {productosAleatorios.map((item) => (
+                <ProductoCard 
+                  key={item.id} 
+                  producto={item} 
+                  setPage={setPage} 
+                  setProductoSeleccionado={setProductoSeleccionado} 
+                />
+              ))}
+            </div>
+          </section>
+
           <Testimonios/>
         </main>
       )}
@@ -150,6 +181,8 @@ export default function App() {
           setSubcategoriaActiva={setSubcategoriaActiva}
           setPage={setPage}
           setProductoSeleccionado={setProductoSeleccionado}
+          terminoBusqueda={terminoBusqueda}
+          setTerminoBusqueda={setTerminoBusqueda}
         />
       )}
 
@@ -157,36 +190,28 @@ export default function App() {
         <ProductoDetalle
           producto={productoSeleccionado}
           setPage={setPage}
+          setProductoSeleccionado={setProductoSeleccionado}
           setCategoriaActiva={setCategoriaActiva}
           setSubcategoriaActiva={setSubcategoriaActiva}
         />
       )}
       
-      {/* --- CART DRAWER CONECTADO --- */}
       {cartOpen && (
         <CartDrawer 
           setCartOpen={setCartOpen} 
           setPage={setPage} 
-          // Actualiza el costo de envío en App.jsx cuando el usuario elige Andreani
           onShippingChange={(costo) => setShippingCost(costo)}
-          // Le pasamos la función de checkout para que el botón del drawer funcione
           checkout={checkout} 
+          loading={loading}
         />
       )}
 
-      {page === 'nosotros' && (
-        <div className="about card">
-          <div className="section-nosotros">
-            <span>Nosotros</span>
-          </div>
-          <p>Kaizen Cosmetics nació de la pasión de <strong>@chinaze.trenzas</strong>.</p>
-        </div>
-      )}
+      {page === "mayorista" && <MayoristaForm />}
 
       {page === "success" && (
         <PaymentSuccess setPage={setPage} clearCart={() => {
           setCartOpen(false);
-          setShippingCost(0); // Limpiamos el envío al finalizar
+          setShippingCost(0);
         }} />
       )}
 

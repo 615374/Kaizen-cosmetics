@@ -18,6 +18,8 @@ export default function Productos({
   setPage,
   setProductoSeleccionado,
   soloCard = false,
+  terminoBusqueda = "", 
+  setTerminoBusqueda    
 }) {
   const { addToCart } = useCart();
   const [cantidad, setCantidad] = useState(1);
@@ -31,7 +33,22 @@ export default function Productos({
     }
   };
 
+  // --- FUNCIÓN PARA QUITAR TILDES ---
+  const normalizarTexto = (texto) => {
+    return texto
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, ""); // Elimina los acentos
+  };
+
+  // --- LÓGICA DE FILTRADO UNIFICADA ---
   const productosFiltrados = productos.filter((p) => {
+    if (terminoBusqueda) {
+      const busquedaNormal = normalizarTexto(terminoBusqueda);
+      const nombreNormal = normalizarTexto(p.nombre);
+      return nombreNormal.includes(busquedaNormal);
+    }
+
     if (categoriaActiva === "gel") return p.categoria === "gel";
     if (categoriaActiva === "herramientas") {
       if (!subcategoriaActiva) return p.categoria === "herramientas";
@@ -40,31 +57,39 @@ export default function Productos({
     return true;
   });
 
-  const titulo = {
-    gel: "Gel Kaizen",
-    herramientas: "Herramientas para peinar",
-  }[categoriaActiva] || "Productos";
+  const titulo = terminoBusqueda 
+    ? `Resultados para: "${terminoBusqueda}"` 
+    : ({ gel: "Gel Kaizen", herramientas: "Herramientas para peinar" }[categoriaActiva] || "Productos");
 
-  const esModoGel = categoriaActiva === "gel" && !soloCard;
+  const esModoGel = categoriaActiva === "gel" && !soloCard && !terminoBusqueda;
 
   return (
-    <section className={`productos-section ${soloCard ? "modo-minimalista" : ""}`}>
+    <section className={`productos-section ${soloCard || terminoBusqueda ? "modo-minimalista" : ""}`}>
       <div className="productos-container">
         {!soloCard && (
           <>
             <nav className="breadcrumb">
-              <span onClick={() => setPage("inicio")}>Inicio</span>
+              <span onClick={() => { setPage("inicio"); if(setTerminoBusqueda) setTerminoBusqueda(""); }}>Inicio</span>
               <span>/</span>
-              <span onClick={() => setPage("productos")}>Productos</span>
-              <span>/</span>
-              <span className="active">
-                {categoriaActiva === "gel" ? "Gel capilar" : "Herramientas"}
-              </span>
+              <span onClick={() => { setPage("productos"); if(setTerminoBusqueda) setTerminoBusqueda(""); }}>Productos</span>
+              
+              {terminoBusqueda ? (
+                <>
+                  <span>/</span>
+                  <span className="active">Búsqueda</span>
+                </>
+              ) : (
+                <>
+                  <span>/</span>
+                  <span className="active">
+                    {categoriaActiva === "gel" ? "Gel capilar" : "Herramientas"}
+                  </span>
+                </>
+              )}
             </nav>
             <h2 className="productos-title">{titulo}</h2>
 
-            {/* BARRA RECUPERADA CON TU CLASE ORIGINAL */}
-            {categoriaActiva === "herramientas" && (
+            {categoriaActiva === "herramientas" && !terminoBusqueda && (
               <div className="subcategorias">
                 <button 
                   className={!subcategoriaActiva ? "active" : ""} 
@@ -86,10 +111,24 @@ export default function Productos({
           </>
         )}
 
+        {productosFiltrados.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+            <p style={{ color: '#666', fontSize: '1.2rem' }}>No encontramos productos que coincidan con tu búsqueda. 💜</p>
+            <button 
+              className="btn-primary" 
+              style={{ marginTop: '20px', width: 'auto', padding: '12px 30px' }}
+              onClick={() => setTerminoBusqueda("")}
+            >
+              Ver todos los productos
+            </button>
+          </div>
+        )}
+
         <div className={`productos-grid ${esModoGel ? "layout-gel-triple" : "grid-herramientas-estandar"}`}>
           {productosFiltrados.map((producto) => (
             <div key={producto.id} className={esModoGel ? "grid-item-kaizen" : "producto-card-wrapper"}>
-              {producto.categoria === "gel" ? (
+              
+              {esModoGel && producto.categoria === "gel" ? (
                 <>
                   <div className="peinado-vertical-wrapper">
                     <img src="/assets/peinado-1.jpg" alt="Peinado" className="img-peinado-vertical" />

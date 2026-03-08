@@ -123,12 +123,6 @@ body {
   cursor: pointer;
 }
 
-
-
-/* ==========================
-   TITULO
-   ========================== */
-
 .nav-title {
   font-family: "Playfair Display", serif;
   font-weight: 700;
@@ -189,6 +183,254 @@ body {
   height: 25px;
 }
 
+.nav-search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--brand-purple);
+  border-radius: 20px;
+  padding: 5px 15px;
+  margin-left: 20px;
+  border: 1px solid var(--brand-mint); 
+  transition: all 0.3s ease;
+}
+
+.nav-search-bar:focus-within {
+  background: var(--brand-purple);
+  box-shadow: 0 0 8px rgba(117, 233, 212, 0.4); 
+}
+
+.nav-search-bar input {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 5px;
+  font-size: 13px;
+  width: 150px; 
+  color: var(--brand-mint);
+}
+
+.nav-search-bar input::placeholder {
+  color: var(--brand-mint);
+  opacity: 0.7;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  color: var(--brand-mint);
+  cursor: pointer;
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.search-btn:hover {
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .nav-search-bar {
+    display: none; 
+  }
+}
+
+
+/* ==========================
+   FORMULARIO MAYORISTA 
+   ========================== */
+
+.mayorista-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 120px auto 60px;
+  padding: 0 20px;
+  font-family: "Inter", sans-serif;
+  color: #4e1b69; 
+}
+
+.form-wrapper {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+}
+
+.mayorista-container h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #4e1b69;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4e1b69;
+}
+
+.input-group input, 
+.input-group textarea {
+  padding: 12px 15px;
+  border: 1.5px solid #4e1b69;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.input-group input:focus, 
+.input-group textarea:focus {
+  box-shadow: 0 0 0 3px rgba(78, 27, 105, 0.1);
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.input-group textarea {
+  height: 150px;
+  resize: none;
+}
+
+.btn-mayorista {
+  background: #4e1b69;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-mayorista:hover {
+  background: #3a144e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-mayorista:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.msg-success {
+  color: #28a745;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+/* Banner de promoción arriba del form */
+.promo-banner-static {
+  background: #4e1b69;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  margin-bottom: 0px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .full-width {
+    grid-column: span 1;
+  }
+  .mayorista-container h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* ==========================
+   MARQUESINA MAYORISTA
+   ========================== */
+
+.mayorista-marquee {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: #4e1b69; 
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-top: 0px; 
+}
+
+.marquee-content {
+  display: inline-flex;
+  gap: 30px; 
+  animation: marquee-animation 60s linear infinite; 
+}
+
+.marquee-content span {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: none; 
+  flex-shrink: 0; 
+}
+
+@keyframes marquee-animation {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================
+   CONTENEDOR DEL FORMULARIO
+   ========================== */
+
+.mayorista-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 60px !important; 
+  padding: 0 20px;
+  font-family: "Inter", sans-serif;
+  color: #4e1b69;
+}
+
+.form-wrapper {
+  background: #ffffff;
+  /* Reducimos el padding superior para que el título 'Solicitar cuenta' esté cerca del banner */
+  padding: 25px 40px 40px; 
+  border-radius: 12px;
+}
+
 /* ==========================
    CARRITO
    ========================== */
@@ -200,20 +442,37 @@ body {
   justify-content: center;
 }
 
+/* BADGE DEL CARRITO EN NAVBAR - ESTILO DELICADO */
 .cart-badge {
   position: absolute;
   top: -6px;
   right: -10px;
-  background: var(--brand-mint);
-  color: var(--brand-purple);
+  
+  /* Tu violeta de marca */
+  background-color: var(--brand-purple); 
+  color: #ffffff;
+  
+  /* Tamaño fijo para que sea un círculo perfecto y no una pelota gigante */
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
+  
+  /* Tipografía fina */
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  
+  /* Centrado matemático */
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  font-weight: 700;
+  align-items: center;
+  
+  /* El secreto: borde blanco para despegarlo del icono */
+  border: 1.5px solid #ffffff; 
+  
+  /* Para que no se estire si hay 2 dígitos */
+  line-height: 1;
+  padding: 0;
 }
 
 
@@ -997,7 +1256,7 @@ body {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding: 100px 0; 
+  padding: 60px 0 80px 0; 
   background: #ffffff;
   text-align: center;
 }
@@ -1006,7 +1265,7 @@ body {
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 1.2px;
-  margin-bottom: 65px;
+  margin-bottom: 45px; 
   color: var(--brand-purple);
 }
 
@@ -1121,7 +1380,8 @@ body {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding: 100px 0; 
+  /* Ajustamos a 60px arriba para consistencia */
+  padding: 60px 0 100px 0; 
   background: #ffffff;
   text-align: center;
   margin-top: 0;
@@ -1138,7 +1398,8 @@ body {
   font-weight: 700;
   letter-spacing: 1.2px;
   margin-top: 0;
-  margin-bottom: 65px; 
+  /* Bajamos de 65px a 45px */
+  margin-bottom: 45px; 
   color: var(--brand-purple);
   text-transform: uppercase;
 }
@@ -1322,29 +1583,24 @@ body {
   background: #fff;
   box-shadow: 0 12px 30px rgba(0,0,0,0.08);
   transition: transform .3s ease, box-shadow .3s ease;
-}
-.producto-card {
   cursor: pointer;
 }
-
 
 .producto-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(0,0,0,0.12);
 }
 
-
-.producto-card img {
-  width: 100%;
-  object-fit: cover;
-}
-
-.producto-card .producto-img-wrapper {
+.producto-img-wrapper {
   aspect-ratio: 1 / 1;
+  overflow: hidden;
+  position: relative;
 }
 
-
-.producto-card img {
+.producto-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.4s ease;
 }
 
@@ -1356,40 +1612,62 @@ body {
 .producto-info {
   padding: 20px 16px 24px;
   text-align: center; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Nombre */
 .producto-nombre {
   font-family: "Inter", "Roboto", sans-serif;
   font-weight: 400;
   font-size: 1rem;     
   letter-spacing: 0.3px;
   color: #222;
-  margin-bottom: 3px;
+  margin-bottom: 6px;
+}
+
+.producto-precios {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
 }
 
 .producto-precio {
   font-family: "Inter", "Roboto", sans-serif;
   font-weight: 500;
   font-size: 0.95rem;
-  color: #7e2da1;
+  color: var(--brand-purple);
 }
 
-/* Botón */
-.producto-info button {
-  margin-top: auto;
-  padding: 10px;
+.precio-anterior {
+  font-size: 0.85rem;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: 300;
+}
+
+/* BOTÓN VER PRODUCTO (VIOLETA SÓLIDO) */
+.btn-ver-producto {
+  margin-top: 18px;
   background: var(--brand-purple);
-  color: #fff;
   border: none;
+  color: #ffffff;
+  padding: 10px 24px;
   border-radius: 8px;
+  font-family: "Inter", "Roboto", sans-serif;
+  font-size: 10px;      
+  font-weight: 400;     
+  letter-spacing: 2px;  
+  text-transform: uppercase;
+  
   cursor: pointer;
-  font-weight: 600;
-  transition: background 0.25s ease;
+  transition: all 0.3s ease;
 }
 
-.producto-info button:hover {
-  background: #6b248b;
+.btn-ver-producto:hover {
+  background: #a65ed1;
+  transform: translateY(-2px);
 }
 
 /* ==========================
@@ -1794,6 +2072,120 @@ body {
 
 .detalle-galeria.con-scroll::-webkit-scrollbar-track {
   background: transparent;
+}
+
+
+/* SECCION TAMBIEN PODRIA INTERESARTE*/
+
+.relacionados-section {
+  max-width: 1200px;
+  margin: 20px auto 80px auto; 
+  padding: 0 20px;
+  text-align: center;
+}
+
+.relacionados-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  margin-top: 0;
+  margin-bottom: 45px; 
+  color: var(--brand-purple);
+  text-transform: uppercase;
+}
+
+.relacionados-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.relacionado-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.relacionado-card:hover {
+  transform: translateY(-5px);
+}
+
+.relacionado-img-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f9f9f9;
+}
+
+.relacionado-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.relacionado-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.relacionado-info h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  height: 40px; /* Para que todos los títulos ocupen lo mismo */
+  overflow: hidden;
+}
+
+.relacionado-precio {
+  font-weight: 700;
+  color: var(--brand-purple);
+  font-size: 16px;
+}
+
+.relacionado-btn {
+  background: none;
+  border: 1px solid var(--brand-purple);
+  color: var(--brand-purple);
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.relacionado-card:hover .relacionado-btn {
+  background: var(--brand-purple);
+  color: #fff;
+}
+
+/* RESPONSIVE: Efecto carrusel en Mobile */
+@media (max-width: 768px) {
+  .relacionados-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 20px; /* Espacio para el scrollbar */
+    scrollbar-width: none; /* Oculta scrollbar en Firefox */
+  }
+
+  .relacionados-grid::-webkit-scrollbar {
+    display: none; /* Oculta scrollbar en Chrome/Safari */
+  }
+
+  .relacionado-card {
+    min-width: 220px; /* Ancho de la card en mobile */
+    scroll-snap-align: center;
+  }
 }
 
 
