@@ -1620,7 +1620,7 @@ body {
 .real-usage-videos {
   max-width: 1400px;
   margin: 0 auto !important;
-  padding: 0 60px !important; 
+  padding: 0px !important; 
   box-sizing: border-box !important;
 }
 
@@ -1628,33 +1628,26 @@ body {
    DESKTOP (Solo para pantallas grandes)
    ========================================== */
 @media (min-width: 1025px) {
+  /* Este es el div que ahora envuelve al Swiper */
+  .real-usage-videos {
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important; /* <--- ESTO ES LO QUE CENTRA TODO */
+    padding: 0 60px !important;
+    box-sizing: border-box !important;
+    display: block !important; 
+  }
+
   .real-usage-swiper {
-    overflow: visible !important;
+    width: 100% !important;
+    margin: 0 !important;
   }
 
   .real-usage-swiper .swiper-wrapper {
     display: flex !important;
-    justify-content: center !important; 
-    gap: 40px !important; 
-    transform: none !important; 
+    justify-content: center !important; /* Centra los slides dentro de los 1400px */
     width: 100% !important;
-  }
-
-  .real-usage-swiper .swiper-slide {
-    width: 340px !important; /* Tamaño equilibrado para que no explote */
-    flex: none !important;
-    height: auto !important;
-  }
-
-  .real-usage-video {
-    width: 100% !important;
-    aspect-ratio: 9 / 16 !important;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  }
-
-  .real-usage-swiper .swiper-pagination {
-    display: none !important;
+    transform: none !important;
   }
 }
 
@@ -1678,9 +1671,10 @@ body {
     margin: 0 auto !important; 
     border-radius: 12px !important;
     aspect-ratio: 9 / 16 !important;
+    box-sizing: border-box !important;
   }
   
-  /* Dejamos que Swiper use sus clases naturales aquí */
+  
 }
 
 /* Estilos comunes */

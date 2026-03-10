@@ -37,7 +37,7 @@ export default function RealUsageSection() {
         USO REAL <span>·</span> RESULTADO REAL
       </h2>
 
-      <div className="real-usage-container">
+      <div className="real-usage-videos">
         <Swiper
           modules={[Pagination, Autoplay]} 
           spaceBetween={20}
