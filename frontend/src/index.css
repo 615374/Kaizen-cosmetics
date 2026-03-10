@@ -85,6 +85,12 @@ body {
   gap: 22px;
 }
 
+/* Fix espacio entre navbar y banner */
+.navbar {
+  margin-bottom: 0 !important;
+}
+
+
 /* LOGO */
 .logo-btn {
   background: none;
@@ -335,7 +341,7 @@ body {
     width: 100%;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     padding: 12px 0 !important; 
-    font-size: 0.9rem !important; 
+    font-size: 0.8rem !important; 
     text-align: left !important;
     justify-content: flex-start !important;
     text-transform: uppercase;
@@ -765,7 +771,7 @@ body {
     visibility: visible !important;
   }
 
-  /* OCULTAR PUNTITOS EN DESKTOP */
+  /* OCULTAR EN DESKTOP */
   .beneficios-container .swiper-pagination {
     display: none !important;
   }
@@ -1315,11 +1321,6 @@ body {
   margin-bottom: 12px;
 }
 
-/* Fix espacio entre navbar y banner */
-.navbar {
-  margin-bottom: 0 !important;
-}
-
 .carousel-container {
   margin-top: 0 !important;
   padding-top: 0 !important;
@@ -1594,7 +1595,7 @@ body {
 
 
 /* ==========================
-   USO REAL · RESULTADO REAL (S.O.S FIX)
+   USO REAL · RESULTADO REAL 
    ========================== */
 
 .real-usage-section {
@@ -1628,11 +1629,11 @@ body {
    DESKTOP (Solo para pantallas grandes)
    ========================================== */
 @media (min-width: 1025px) {
-  /* Este es el div que ahora envuelve al Swiper */
+
   .real-usage-videos {
     width: 100% !important;
     max-width: 1400px !important;
-    margin: 0 auto !important; /* <--- ESTO ES LO QUE CENTRA TODO */
+    margin: 0 auto !important; 
     padding: 0 60px !important;
     box-sizing: border-box !important;
     display: block !important; 
@@ -1645,14 +1646,14 @@ body {
 
   .real-usage-swiper .swiper-wrapper {
     display: flex !important;
-    justify-content: center !important; /* Centra los slides dentro de los 1400px */
+    justify-content: center !important; 
     width: 100% !important;
     transform: none !important;
   }
 }
 
 /* ==========================================
-   MOBILE & TABLET (Aquí NO tocamos el Swiper)
+   MOBILE & TABLET
    ========================================== */
 @media (max-width: 1024px) {
   .real-usage-section {
@@ -1774,7 +1775,6 @@ body {
     line-height: 1.3;
   }
 
-  /* AJUSTE DE LA CARD PARA ESPEJAR PRODUCTOS */
   .testimonio-card {
     height: 150px !important; 
     width: 100% !important;
@@ -1995,7 +1995,7 @@ body {
   font-weight: 300;
 }
 
-/* BOTÓN VER PRODUCTO (VIOLETA SÓLIDO) */
+/* BOTÓN VER PRODUCTO */
 .btn-ver-producto {
   margin-top: 18px;
   background: var(--brand-purple);
@@ -2091,7 +2091,7 @@ body {
     font-size: 0.75rem !important;
   }
 
-  /* 6. BOTÓN "VER PRODUCTO" */
+  /* BOTÓN "VER PRODUCTO" */
   .btn-ver-producto {
     margin-top: 10px !important;
     padding: 8px 12px !important;
@@ -2114,6 +2114,8 @@ body {
   }
 }
 
+
+/*PRODUCT DETAIL */
 
 /* CONTENEDOR IMAGEN */
 .producto-img-wrapper {
@@ -2472,13 +2474,11 @@ body {
   flex-wrap: nowrap;
 }
 
-/* CLAVE DEL FIX 👇 */
 .detalle-galeria.con-scroll .thumb {
   flex: 0 0 120px; 
   max-width: 120px;
 }
 
-/* scrollbar suave */
 .detalle-galeria.con-scroll::-webkit-scrollbar {
   height: 6px;
 }
@@ -2491,6 +2491,93 @@ body {
 .detalle-galeria.con-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
+
+
+/* ==========================================
+   PRODUCTO DETAIL - MOBILE 
+   ========================================== */
+@media (max-width: 768px) {
+  .producto-detalle {
+    flex-direction: column;
+    gap: 20px !important;
+    padding: 0 15px !important;
+    align-items: flex-start !important; 
+  }
+
+  /* INFO */
+  .detalle-info {
+    width: 100% !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    justify-content: flex-start !important;
+    margin-bottom: 12px !important; 
+    font-size: 11px !important;
+  }
+
+  /* TÍTULO*/
+  .detalle-info h1 {
+    font-size: 1.4rem !important; 
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    line-height: 1.2;
+  }
+
+  /* PRECIOS */
+  .detalle-precios {
+    justify-content: flex-start !important;
+    margin-bottom: 4px !important;
+  }
+
+  .detalle-precio-actual {
+    font-size: 1.25rem !important; 
+    font-weight: 600 !important;
+  }
+
+  .detalle-precio-anterior {
+    font-size: 0.85rem !important;
+  }
+
+  .detalle-efectivo {
+    font-size: 0.8rem !important;
+    margin-bottom: 20px !important;
+    display: block;
+  }
+
+  /* DESCRIPCIÓN */
+  .detalle-descripcion {
+    font-size: 0.88rem !important;
+    text-align: left !important;
+    padding: 0 !important;
+    margin-top: 15px !important;
+  }
+
+  /* SELECTORES Y BOTÓN */
+  .variantes {
+    width: 100%;
+    margin: 15px 0 !important;
+  }
+
+  .variantes-colores {
+    justify-content: flex-start !important;
+  }
+
+  .cantidad-selector {
+    justify-content: flex-start !important;
+    margin-bottom: 20px !important;
+  }
+
+  .btn-primary {
+    max-width: 100% !important; 
+    margin: 0 !important;
+    font-size: 0.95rem !important;
+    padding: 14px !important;
+  }
+}
+
 
 
 /* SECCION TAMBIEN PODRIA INTERESARTE*/
@@ -2794,29 +2881,64 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
-  .cart-item {
-    grid-template-columns: 70px 1fr;
-    grid-template-rows: auto auto;
+
+  .cart-drawer {
+    padding: 1rem 0.8rem !important;
+  }
+  .cart-wrapper h2 {
+    font-size: 1.1rem !important; 
+    margin-bottom: 0.8rem !important;
   }
 
-  .cart-item-actions {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  .cart-item {
+    grid-template-columns: 60px 1fr !important; 
+    gap: 0.7rem !important;
+    padding: 0.6rem !important;
+  }
+
+  .cart-item-img {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .cart-item-info h4 {
+    font-size: 0.8rem !important;
+    line-height: 1 !important;
+  }
+
+  .cart-price {
+    font-size: 0.8rem !important;
   }
 
   .cart-actions {
-    flex-direction: column;
+    margin-top: 1rem !important;
+    gap: 0.4rem !important;
+  }
+
+ 
+  .cart-actions button, 
+  .cart-actions a,
+  .cart-actions .btn { 
+    padding: 8px 12px !important; 
+    font-size: 0.75rem !important; 
+    height: auto !important; 
+    min-height: 0 !important; 
+    line-height: 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .cart-summary-row {
+    font-size: 0.75rem !important;
+  }
+
+  .cart-summary-row2 {
+    font-size: 0.95rem !important;
+    margin-top: 0.5rem !important;
   }
 }
 
-@media (max-width: 600px) {
-  .cart-drawer {
-    width: 100%;
-    padding: 1.5rem 1rem;
-  }
-}
 
 
 /* ===== CONTROL CANTIDAD ===== */
