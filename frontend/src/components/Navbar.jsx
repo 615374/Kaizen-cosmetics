@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons"
+import { faShoppingCart, faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons"
 import { useCart } from "../context/CartContext";
 import isologo from '/assets/isologo.png' 
 import logo from '/assets/logo.png'
@@ -16,6 +16,7 @@ export default function Navbar({
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0()
   const [visible, setVisible] = useState(true)
   const [searchTerm, setSearchTerm] = useState("") 
+  const [menuOpen, setMenuOpen] = useState(false) 
   const lastY = useRef(0)
   const { cartCount } = useCart();
 
@@ -32,13 +33,13 @@ export default function Navbar({
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // FUNCIÓN CLAVE: Navega y limpia la búsqueda 
   const navegarYLimpiar = (pagina, categoria = null) => {
-    if (setTerminoBusqueda) setTerminoBusqueda(""); // Limpia el filtro global
-    setSearchTerm(""); // Limpia el texto del input
+    if (setTerminoBusqueda) setTerminoBusqueda(""); 
+    setSearchTerm(""); 
     setPage(pagina);
     setCategoriaActiva(categoria);
     setSubcategoriaActiva(null);
+    setMenuOpen(false); 
     window.scrollTo(0, 0);
   };
 
@@ -49,6 +50,7 @@ export default function Navbar({
       setSubcategoriaActiva(null);
       if (setTerminoBusqueda) setTerminoBusqueda(searchTerm); 
       setPage("productos");
+      setMenuOpen(false); 
       window.scrollTo(0, 0);
     }
   };
@@ -64,6 +66,12 @@ export default function Navbar({
       </div>
 
       <header className={`navbar ${visible ? "nav-visible" : "nav-hidden"}`}>
+        
+        {/* BOTÓN HAMBURGUESA */}
+        <button className="hamburger-btn" onClick={() => setMenuOpen(!menuOpen)}>
+          <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+        </button>
+
         {/* IZQUIERDA */}
         <div className="nav-left">
           <button className="logo-btn" onClick={() => navegarYLimpiar("inicio")}>
@@ -91,7 +99,7 @@ export default function Navbar({
         </div>
 
         {/* DERECHA */}
-        <div className="nav-right">
+        <div className={`nav-right ${menuOpen ? "nav-mobile-open" : ""}`}>
           <button className="nav-btn big" onClick={() => navegarYLimpiar("inicio")}>
             Inicio
           </button>
@@ -124,7 +132,7 @@ export default function Navbar({
             </button>
           )}
 
-          <button className="nav-btn cart-btn" onClick={() => setCartOpen(true)}>
+          <button className="nav-btn cart-btn" onClick={() => {setCartOpen(true); setMenuOpen(false);}}>
             <div className="cart-icon-wrapper">
               <FontAwesomeIcon icon={faShoppingCart} />
               {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}

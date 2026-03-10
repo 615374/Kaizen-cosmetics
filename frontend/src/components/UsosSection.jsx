@@ -1,4 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
+
+// Estilos de Swiper
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 export default function UsosSection({ usos }) {
   return (
@@ -8,17 +14,36 @@ export default function UsosSection({ usos }) {
           NO ES PROMESA <span>·</span> ES FIJACIÓN
         </h2>
 
-        <div className="usos-strip">
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={10}
+          slidesPerView={2} // En mobile se ve uno y una pista del otro
+          centeredSlides={false}
+          loop={true}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3500, disableOnInteraction: false }}
+          breakpoints={{
+            768: {
+              slidesPerView: 3,
+              centeredSlides: false,
+              allowTouchMove: false, // Bloqueamos el carrusel en PC
+              pagination: false,     // Ocultamos puntos en PC
+              spaceBetween: 36      
+            }
+          }}
+          className="usos-swiper"
+        >
           {usos.map((uso, i) => (
-            <UsoItem key={i} uso={uso} />
+            <SwiperSlide key={i}>
+              <UsoItem uso={uso} />
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </section>
   );
 }
 
-// Sub-componente corregido para usar las imágenes del data
 function UsoItem({ uso }) {
   const [hovered, setHovered] = useState(false);
 
@@ -28,11 +53,10 @@ function UsoItem({ uso }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Mantenemos la estructura de clases original */}
       <img 
         src={hovered ? uso.hoverImage : uso.image} 
         alt={uso.text} 
-        style={{ transition: 'opacity 0.3s ease' }} // Suavizado opcional inline
+        style={{ transition: 'opacity 0.3s ease' }}
       />
       <p>{uso.text}</p>
     </div>
