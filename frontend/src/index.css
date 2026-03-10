@@ -499,7 +499,6 @@ body {
   font-weight: 600;
 }
 
-/* Banner de promoción arriba del form */
 .promo-banner-static {
   background: #4e1b69;
   color: white;
@@ -584,6 +583,51 @@ body {
   padding: 25px 40px 40px; 
   border-radius: 12px;
 }
+
+
+@media (max-width: 768px) {
+
+  .mayorista-container {
+    max-width: 100% !important; 
+    width: 100% !important;
+    padding: 0 10px !important; 
+    margin: 0px auto !important;
+  }
+
+  .form-wrapper {
+    width: 100% !important;
+    padding: 25px 15px !important; 
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+
+  .mayorista-info p {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    text-align: left !important;
+    margin-bottom: 20px !important;
+  }
+
+  .form-wrapper input,
+  .form-wrapper textarea,
+  .form-wrapper select {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 15px !important;
+  }
+
+  .mayorista-info h2 {
+    width: 100% !important;
+    font-size: 1.6rem !important;
+    text-align: left !important;
+  }
+}
+
+
 
 /* ==========================
    CARRITO
@@ -2869,7 +2913,6 @@ body {
   font-weight: 600;
 }
 
-
 /* ===== BOTONES ===== */
 .cart-actions {
   margin-top: 2rem;
@@ -2915,7 +2958,6 @@ body {
     gap: 0.4rem !important;
   }
 
- 
   .cart-actions button, 
   .cart-actions a,
   .cart-actions .btn { 
@@ -3091,7 +3133,7 @@ body {
   max-width: 320px;
 }
 
-/* 2. VIDEO SHOWCASE (Sección de compra) */
+/* VIDEO SHOWCASE (Sección de compra) */
 .video-suelto-match.vertical-mode {
   display: flex;
   flex-direction: column;
@@ -3337,7 +3379,7 @@ body {
   margin-top: 5px;
 }
 
-/* NIMACIONES Y RESPONSIVE */
+/* ANIMACIONES Y RESPONSIVE */
 @keyframes floatAnim {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
@@ -3366,7 +3408,7 @@ body {
   ========================================== */
 
 @media (max-width: 1024px) {
-  /* Quitamos el desplazamiento lateral para que todo vuelva al centro */
+ 
   .layout-gel-simetrico {
     display: flex !important;
     flex-direction: column !important;
@@ -3377,12 +3419,10 @@ body {
     padding: 20px 15px !important;
   }
 
-  /* Ocultamos la flecha (Hint)*/
   .gel-hint-wrapper {
     display: none !important;
   }
 
-  /* Ajustamos el tamaño del Gel */
   .wrapper-gel-premium .gel-floating-wrapper {
     height: 500px;
     width: 100%;
@@ -3392,14 +3432,12 @@ body {
     max-width: 240px;
   }
 
-  /* El video ahora ocupa el ancho completo disponible */
   .video-suelto-match.vertical-mode {
     width: 100%;
     max-width: 320px;
     height: 450px;
   }
-
-  /* Centramos el título en mobile por si quedó corrido */
+  
   .productos-title {
     text-align: center;
     margin-bottom: 20px !important;
@@ -3730,7 +3768,7 @@ body {
   margin-top: 20px;
 }
 
-/* --- ESTILO FINAL KAIZEN GEL --- */
+/* --- KAIZEN GEL --- */
 .kaizen-desc-final {
   margin-top: 35px;
   padding-top: 25px;
