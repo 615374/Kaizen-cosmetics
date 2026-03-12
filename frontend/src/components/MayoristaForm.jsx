@@ -26,14 +26,6 @@ export default function MayoristaForm() {
 
   return (
     <div className="mayorista-container">
-       <div className="mayorista-marquee">
-          <div className="marquee-content">
-             <span>¿Sos revendedor o trenzadora? Solicitá tu cuenta MAYORISTA y accedé a un precio exclusivo 😎</span>
-             <span>¿Sos revendedor o trenzadora? Solicitá tu cuenta MAYORISTA y accedé a un precio exclusivo 😎</span>
-             <span>¿Sos revendedor o trenzadora? Solicitá tu cuenta MAYORISTA y accedé a un precio exclusivo 😎</span>
-             <span>¿Sos revendedor o trenzadora? Solicitá tu cuenta MAYORISTA y accedé a un precio exclusivo 😎</span>
-          </div>
-       </div>
       
       <div className="form-wrapper">
         <h1>Solicitar cuenta mayorista</h1>

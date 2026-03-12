@@ -46,7 +46,9 @@ export const productos = [
   descuento: 26,
   sinStock: true,
   imagen: "/assets/productos/cepillo-baby-hair.jpg",
-  imagenes: ["/assets/productos/cepillo-baby-hair.jpg" ],
+  imagenes: ["/assets/productos/cepillo-baby-hair.jpg",
+    "/assets/productos/cepillo-baby-hair-rosa.jpg",
+    "/assets/productos/cepillo-baby-hair-negro.jpg"],
 
       variantes: [
     {
@@ -54,7 +56,7 @@ export const productos = [
       label: "Negro",
       color: "#000000ff",
       stock: 12,
-      imagen: "/assets/productos/cepillo-baby-hair.jpg"
+      imagen: "/assets/productos/cepillo-baby-hair-negro.jpg"
     },
     {
       id: "rosa",
@@ -173,8 +175,8 @@ export const productos = [
       id: "rosa",
       label: "Rosa",
       color: "#fd98c9ff",
-      stock: 0,
-      imagen: "/assets/productos/espatulaequilibrista.jpg"
+      stock: 5,
+      imagen: "/assets/productos/espatulaequilibristarosa.jpg"
     }
   ],
 

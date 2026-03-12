@@ -19,6 +19,7 @@ import { usos } from "./data/usos";
 import RealUsageSection from "./components/RealUsageSection"
 
 import MayoristaForm from './components/MayoristaForm'
+import MayoristaBanner from './components/MayoristaBanner'
 
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
@@ -129,6 +130,8 @@ export default function App() {
         setCartOpen={setCartOpen}
         setTerminoBusqueda={setTerminoBusqueda}
       />
+
+      <MayoristaBanner setPage={setPage} />
 
       {page === 'inicio' && (
         <main className="home"> 

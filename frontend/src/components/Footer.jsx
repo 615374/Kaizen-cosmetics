@@ -107,7 +107,7 @@ export default function Footer() {
             <div className="map-container">
               <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.123!2d-58.520!3d-34.650!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDM5JzAwLjAiUyA1OMKwMzEnMTIuMCJX!5e0!3m2!1ses-419!2sar!4v1600000000000!5m2!1ses-419!2sar"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.8335035255475!2d-58.51403212425866!3d-34.63364967294403!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcc83f60b4576f%3A0xc0693a409f8722a0!2sCajaravilla%204881%2C%20C1407%20CABA!5e0!3m2!1ses-419!2sar!4v1700000000000!5m2!1ses-419!2sar"
                   width="100%"
                   height="150"
                   style={{ border: 0, borderRadius: '8px' }}

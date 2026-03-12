@@ -165,6 +165,9 @@ export default function Productos({
                       <div className="gel-trust-badges">
                         <img src="/assets/cruelty-free.png" alt="Sellos" className="img-sellos-calidad" />
                       </div>
+                       <div className="badge-wrapper-anmat" style={{ marginTop: "10px" }}>
+                        <span className="badge-anmat-violeta">Aprobado por ANMAT</span>
+                     </div>
                     </div>
                   </div>
                 </>
@@ -187,9 +190,6 @@ export default function Productos({
               <div className="video-info-home" style={{ marginTop: "15px" }}>
                 <h3 className="video-nombre-home" style={{ color: "var(--brand-purple)" }}>Libre de crueldad animal</h3>
                 <p className="video-desc-home">Libre de Parabenos, Petrolato, Siliconas y Aceite Mineral.</p>
-                <div className="badge-wrapper-anmat" style={{ marginTop: "10px" }}>
-                  <span className="badge-anmat-violeta">Aprobado por ANMAT</span>
-                </div>
               </div>
             </div>
           )}

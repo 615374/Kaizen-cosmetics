@@ -14,14 +14,18 @@ const PORT = process.env.PORT || 3001
 const BASE_URL = process.env.BASE_URL || 'https://kris-fathomless-horrifyingly.ngrok-free.dev';
 
 // Configuración Mercado Pago
+// Configuración Mercado Pago
 if(!process.env.MERCADOPAGO_ACCESS_TOKEN){
   console.warn('❌ Warning: MERCADOPAGO_ACCESS_TOKEN no seteado en .env')
 } else {
+  // Verificamos si es un token de producción
+  const isProduction = process.env.MERCADOPAGO_ACCESS_TOKEN.startsWith('APP_USR-');
+  console.log(`💳 Mercado Pago configurado en modo: ${isProduction ? 'PRODUCCIÓN ✅' : 'SANDBOX 🧪'}`);
+  
   mercadopago.configure({
     access_token: process.env.MERCADOPAGO_ACCESS_TOKEN
-  })
+  });
 }
-
 // --- REDIRECCIONES POST-PAGO ---
 app.get('/success', (req, res) => res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/success`));
 app.get('/failure', (req, res) => res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/failure`));
@@ -41,6 +45,7 @@ app.post('/api/create_preference', async (req, res) => {
         currency_id: 'ARS',
         unit_price: Number(it.precio || it.unit_price),
       })),
+      external_reference: "KAIZEN_WEB_ORDER",
       metadata: { items },
       back_urls: {
         success: `${BASE_URL}/success`,
@@ -48,7 +53,7 @@ app.post('/api/create_preference', async (req, res) => {
         pending: `${BASE_URL}/pending`
       },
       auto_return: "approved",
-      binary_mode: true,
+      binary_mode: false,
       notification_url: `${BASE_URL}/api/webhook`
     }
 
