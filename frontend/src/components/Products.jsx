@@ -33,29 +33,35 @@ export default function Productos({
     }
   };
 
-  // --- FUNCIÓN PARA QUITAR TILDES ---
   const normalizarTexto = (texto) => {
     return texto
       .toLowerCase()
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, ""); // Elimina los acentos
+      .replace(/[\u0300-\u036f]/g, "");
   };
 
-  // --- LÓGICA DE FILTRADO UNIFICADA ---
-  const productosFiltrados = productos.filter((p) => {
-    if (terminoBusqueda) {
-      const busquedaNormal = normalizarTexto(terminoBusqueda);
-      const nombreNormal = normalizarTexto(p.nombre);
-      return nombreNormal.includes(busquedaNormal);
-    }
+  // --- LÓGICA DE FILTRADO Y ORDENAMIENTO ---
+  const productosFiltrados = productos
+    .filter((p) => {
+      if (terminoBusqueda) {
+        const busquedaNormal = normalizarTexto(terminoBusqueda);
+        const nombreNormal = normalizarTexto(p.nombre);
+        return nombreNormal.includes(busquedaNormal);
+      }
 
-    if (categoriaActiva === "gel") return p.categoria === "gel";
-    if (categoriaActiva === "herramientas") {
-      if (!subcategoriaActiva) return p.categoria === "herramientas";
-      return p.categoria === "herramientas" && p.subcategoria === subcategoriaActiva;
-    }
-    return true;
-  });
+      if (categoriaActiva === "gel") return p.categoria === "gel";
+      if (categoriaActiva === "herramientas") {
+        if (!subcategoriaActiva) return p.categoria === "herramientas";
+        return p.categoria === "herramientas" && p.subcategoria === subcategoriaActiva;
+      }
+      return true;
+    })
+    // Ordenamos: Stock disponible arriba, agotados abajo
+    .sort((a, b) => {
+      const stockA = a.variantes ? a.variantes.some(v => v.stock > 0) : (a.stock > 0);
+      const stockB = b.variantes ? b.variantes.some(v => v.stock > 0) : (b.stock > 0);
+      return stockB - stockA; 
+    });
 
   const titulo = terminoBusqueda 
     ? `Resultados para: "${terminoBusqueda}"` 
@@ -125,61 +131,73 @@ export default function Productos({
         )}
 
         <div className={`productos-grid ${esModoGel ? "layout-gel-triple" : "grid-herramientas-estandar"}`}>
-          {productosFiltrados.map((producto) => (
-            <div key={producto.id} className={esModoGel ? "grid-item-kaizen" : "producto-card-wrapper"}>
-              
-              {esModoGel && producto.categoria === "gel" ? (
-                <>
-                  <div className="peinado-vertical-wrapper">
-                    <img src="/assets/peinado-1.jpg" alt="Peinado" className="img-peinado-vertical" />
-                    <div className="video-info-home" style={{ marginTop: "15px" }}>
-                      <h3 className="video-nombre-home">Fijación Profesional</h3>
-                      <p className="video-desc-home">Textura ideal para trenzas y peinados de alta precisión.</p>
-                    </div>
-                  </div>
+          {productosFiltrados.map((producto) => {
+            // Calculamos stock para este producto específico en el loop
+            const tieneStock = producto.variantes 
+              ? producto.variantes.some(v => v.stock > 0) 
+              : producto.stock > 0;
+            const stockMaximo = producto.stock || 0;
 
-                  <div className="info-compra-wrapper">
-                    <div className="wrapper-gel-premium">
-                      <GelFeatured
-                        precio={producto.precio}
-                        onClick={() => { setProductoSeleccionado(producto); setPage("detalle"); }}
-                        hideButton={true} hidePrice={true} showHint={!soloCard}
-                      />
-                    </div>
-                    <div className="acciones-compra-inicio">
-                      <span className="gel-featured-price">${producto.precio?.toLocaleString()}</span>
-                      {!producto.sinStock && (
-                        <div className="selector-cantidad-home">
-                          <button onClick={() => setCantidad(Math.max(1, cantidad - 1))}>-</button>
-                          <span>{cantidad}</span>
-                          <button onClick={() => setCantidad(cantidad + 1)}>+</button>
-                        </div>
-                      )}
-                      <button 
-                        className={`btn-agregar-home ${producto.sinStock ? "btn-disabled" : ""}`}
-                        disabled={producto.sinStock}
-                        onClick={() => !producto.sinStock && addToCart(producto, cantidad)}
-                      >
-                        {producto.sinStock ? "SIN STOCK" : "AGREGAR AL CARRITO"}
-                      </button>
-                      <div className="gel-trust-badges">
-                        <img src="/assets/cruelty-free.png" alt="Sellos" className="img-sellos-calidad" />
+            return (
+              <div key={producto.id} className={esModoGel ? "grid-item-kaizen" : "producto-card-wrapper"}>
+                
+                {esModoGel && producto.categoria === "gel" ? (
+                  <>
+                    <div className="peinado-vertical-wrapper">
+                      <img src="/assets/peinado-1.jpg" alt="Peinado" className="img-peinado-vertical" />
+                      <div className="video-info-home" style={{ marginTop: "15px" }}>
+                        <h3 className="video-nombre-home">Fijación Profesional</h3>
+                        <p className="video-desc-home">Textura ideal para trenzas y peinados de alta precisión.</p>
                       </div>
-                       <div className="badge-wrapper-anmat" style={{ marginTop: "10px" }}>
-                        <span className="badge-anmat-violeta">Aprobado por ANMAT</span>
-                     </div>
                     </div>
-                  </div>
-                </>
-              ) : (
-                <ProductoCard
-                  producto={producto}
-                  setPage={setPage}
-                  setProductoSeleccionado={setProductoSeleccionado}
-                />
-              )}
-            </div>
-          ))}
+
+                    <div className="info-compra-wrapper">
+                      <div className="wrapper-gel-premium">
+                        <GelFeatured
+                          precio={producto.precio}
+                          onClick={() => { setProductoSeleccionado(producto); setPage("detalle"); }}
+                          hideButton={true} hidePrice={true} showHint={!soloCard}
+                        />
+                      </div>
+                      <div className="acciones-compra-inicio">
+                        <span className="gel-featured-price">${producto.precio?.toLocaleString()}</span>
+                        
+                        {/* Validación de stock para el selector */}
+                        {tieneStock && (
+                          <div className="selector-cantidad-home">
+                            <button onClick={() => setCantidad(Math.max(1, cantidad - 1))}>-</button>
+                            <span>{cantidad}</span>
+                            <button onClick={() => { if(cantidad < stockMaximo) setCantidad(cantidad + 1) }}>+</button>
+                          </div>
+                        )}
+
+                        <button 
+                          className={`btn-agregar-home ${!tieneStock ? "btn-disabled" : ""}`}
+                          disabled={!tieneStock}
+                          onClick={() => tieneStock && addToCart(producto, cantidad)}
+                        >
+                          {tieneStock ? "AGREGAR AL CARRITO" : "SIN STOCK"}
+                        </button>
+
+                        <div className="gel-trust-badges">
+                          <img src="/assets/cruelty-free.png" alt="Sellos" className="img-sellos-calidad" />
+                        </div>
+                        <div className="badge-wrapper-anmat" style={{ marginTop: "10px" }}>
+                          <span className="badge-anmat-violeta">Aprobado por ANMAT</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <ProductoCard
+                    producto={producto}
+                    setPage={setPage}
+                    setProductoSeleccionado={setProductoSeleccionado}
+                  />
+                )}
+              </div>
+            );
+          })}
 
           {esModoGel && (
             <div className="video-suelto-match vertical-mode">

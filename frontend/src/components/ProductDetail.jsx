@@ -10,14 +10,12 @@ function buildGallery(producto) {
       variantId: v.id,
     }));
   }
-
   if (producto.imagenes && producto.imagenes.length > 0) {
     return producto.imagenes.map(img => ({
       src: img,
       variantId: null,
     }));
   }
-
   return [];
 }
 
@@ -41,6 +39,11 @@ export default function ProductoDetalle({
   const [activeIndex, setActiveIndex] = useState(0);
   const [varianteActiva, setVarianteActiva] = useState(null);
   const [cantidad, setCantidad] = useState(1);
+
+  // Determinamos si el producto globalmente no tiene stock
+  const sinStockGlobal = producto.variantes 
+    ? !producto.variantes.some(v => v.stock > 0) 
+    : producto.stock === 0;
 
   const relacionados = productos
     .filter(p => p.id !== producto.id)
@@ -92,49 +95,16 @@ export default function ProductoDetalle({
 
   const renderContenidoLimpio = (texto) => {
     if (!texto) return null;
-
-    const colores = {
-      "ANMAT": "#c469d4",
-      "Palta": "#30ad36",
-      "Almendras": "#b67963",
-      "Jojoba": "#4e1b69",
-      "Aloe Vera": "#00bcd4",
-      "Lino": "#ff9800",
-      "Textura": "#4e1b69"
-    };
-
-    if (producto.id !== "gel-capilar") {
-      return <span>{texto}</span>;
-    }
-
+    const colores = { "ANMAT": "#c469d4", "Palta": "#30ad36", "Almendras": "#b67963", "Jojoba": "#4e1b69", "Aloe Vera": "#00bcd4", "Lino": "#ff9800", "Textura": "#4e1b69" };
+    if (producto.id !== "gel-capilar") return <span>{texto}</span>;
     const [titulo, ...detalle] = texto.split('\n');
     let colorFinal = "#4b4949";
-
-    Object.keys(colores).forEach(key => {
-      if (titulo.includes(key)) colorFinal = colores[key];
-    });
-
+    Object.keys(colores).forEach(key => { if (titulo.includes(key)) colorFinal = colores[key]; });
     return (
       <div style={{ marginBottom: '15px', textAlign: 'left' }}>
-        <strong style={{ 
-          color: colorFinal, 
-          fontWeight: '900', 
-          fontSize: '1rem', 
-          display: 'block',
-          lineHeight: '1.2' 
-        }}>
-          {titulo}
-        </strong>
+        <strong style={{ color: colorFinal, fontWeight: '900', fontSize: '1rem', display: 'block', lineHeight: '1.2' }}>{titulo}</strong>
         {detalle.length > 0 && (
-          <span style={{ 
-            color: '#666', 
-            fontSize: '0.92rem', 
-            marginTop: '3px', 
-            display: 'block',
-            lineHeight: '1.4'
-          }}>
-            {detalle.join('\n')}
-          </span>
+          <span style={{ color: '#666', fontSize: '0.92rem', marginTop: '3px', display: 'block', lineHeight: '1.4' }}>{detalle.join('\n')}</span>
         )}
       </div>
     );
@@ -148,7 +118,8 @@ export default function ProductoDetalle({
         <div className="detalle-img-wrapper">
           <div className="contenedor-principal-fix">
             <img src={imagenPrincipal} alt={producto.nombre} className="detalle-img-principal" />
-            {producto.sinStock && <span className="badge-sin-stock">Sin stock</span>}
+            {/* Badge sin stock */}
+            {sinStockGlobal && <span className="badge-sin-stock">Sin stock</span>}
           </div>
 
           {gallery.length > 1 && (
@@ -204,7 +175,14 @@ export default function ProductoDetalle({
                     key={v.id}
                     className={`color-dot ${varianteActiva?.id === v.id ? "active" : ""} ${v.stock === 0 ? "sin-stock" : ""}`}
                     style={{ backgroundColor: v.color }}
-                    onClick={() => { if (v.stock > 0) { setVarianteActiva(v); const idx = gallery.findIndex(img => img.variantId === v.id); if (idx !== -1) setActiveIndex(idx); setCantidad(1); } }}
+                    onClick={() => { 
+                      if (v.stock > 0) { 
+                        setVarianteActiva(v); 
+                        const idx = gallery.findIndex(img => img.variantId === v.id); 
+                        if (idx !== -1) setActiveIndex(idx); 
+                        setCantidad(1); 
+                      } 
+                    }}
                     title={v.label}
                   />
                 ))}
@@ -212,17 +190,22 @@ export default function ProductoDetalle({
             </div>
           )}
 
-          {/* CTA SECCIÓN */}
+          {/* CTA SECCIÓN ACTUALIZADA */}
           <div className="compra-acciones-container">
             {!requiereVariante || varianteActiva ? (
               <>
                 <div className="cantidad-selector">
-                  <button onClick={decrementar} disabled={producto.sinStock}>-</button>
+                  <button onClick={decrementar} disabled={stockFinal === 0}>-</button>
                   <span>{cantidad}</span>
-                  <button onClick={incrementar} disabled={producto.sinStock}>+</button>
+                  <button onClick={incrementar} disabled={stockFinal === 0}>+</button>
                 </div>
-                <button className={producto.sinStock ? "btn-disabled" : "btn-primary"} onClick={handleAddToCart} disabled={producto.sinStock}>
-                  {producto.sinStock ? "SIN STOCK" : "AGREGAR AL CARRITO"}
+                {/* Botón dinámico: si no hay stock del color elegido o del producto, se bloquea */}
+                <button 
+                  className={stockFinal === 0 ? "btn-disabled" : "btn-primary"} 
+                  onClick={handleAddToCart} 
+                  disabled={stockFinal === 0}
+                >
+                  {stockFinal === 0 ? "SIN STOCK" : "AGREGAR AL CARRITO"}
                 </button>
               </>
             ) : (
@@ -230,9 +213,8 @@ export default function ProductoDetalle({
             )}
           </div>
 
-          {/* DESCRIPCIÓN DINÁMICA */}
+          {/* DESCRIPCIÓN DINÁMICA... (Sin cambios) */}
           <section className="producto-descripcion-extendida">
-            {/* Intro */}
             {producto.descripcion?.intro && (
               <div className="desc-bloque">
                 {producto.descripcion.intro.split('\n\n').map((p, i) => (
@@ -240,14 +222,11 @@ export default function ProductoDetalle({
                 ))}
               </div>
             )}
-
-            {/* Beneficios */}
             {producto.descripcion?.subtitulo && (
               <h4 style={{ color: '#4e1b69', fontWeight: '900', margin: '25px 0 15px' }}>
                 {producto.descripcion.subtitulo}
               </h4>
             )}
-
             {producto.descripcion?.items && (
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {producto.descripcion.items.map((item, index) => (
@@ -260,8 +239,6 @@ export default function ProductoDetalle({
                 ))}
               </ul>
             )}
-
-            {/* Cierre */}
             {producto.descripcion?.cierre && (
               <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #f0f0f0' }}>
                 {producto.descripcion.cierre.split('\n\n').map((p, i) => (
@@ -273,7 +250,7 @@ export default function ProductoDetalle({
         </div>
       </section>
 
-      {/* SECCIÓN: TAMBIÉN PODRÍA INTERESARTE */}
+      {/* SECCIÓN RELACIONADOS... (Sin cambios) */}
       <section className="relacionados-section">
         <h2 className="relacionados-title">También podría interesarte</h2>
         <div className="relacionados-grid">

@@ -1,4 +1,11 @@
 export default function ProductoCard({ producto, setPage, setProductoSeleccionado }) {
+  
+  // Si tiene variantes, chequea que al menos una tenga stock > 0.
+  // Si no tiene variantes, chequea el stock directo del producto.
+  const sinStockReal = producto.variantes 
+    ? !producto.variantes.some(v => v.stock > 0) 
+    : producto.stock === 0;
+
   return (
     <div
       className="producto-card"
@@ -13,7 +20,7 @@ export default function ProductoCard({ producto, setPage, setProductoSeleccionad
         <img src={producto.imagen} alt={producto.nombre} />
 
         {/* BADGE SIN STOCK */}
-        {producto.sinStock && (
+        {sinStockReal && (
           <span className="badge-sin-stock">Sin stock</span>
         )}
 

@@ -199,16 +199,17 @@ export default function App() {
         />
       )}
       
-      {cartOpen && (
-        <CartDrawer 
-          setCartOpen={setCartOpen} 
-          setPage={setPage} 
-          onShippingChange={(costo) => setShippingCost(costo)}
-          checkout={checkout} 
-          loading={loading}
-        />
-      )}
-
+     {cartOpen && (
+      <CartDrawer 
+        setCartOpen={setCartOpen} 
+        setPage={setPage} 
+        onShippingChange={(costo) => setShippingCost(costo)}
+        setCategoriaActiva={setCategoriaActiva} 
+        setSubcategoriaActiva={setSubcategoriaActiva} 
+        checkout={checkout} 
+        loading={loading}
+      />
+)}
       {page === "mayorista" && <MayoristaForm />}
 
       {page === "success" && (

@@ -5,8 +5,9 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  const addToCart = (producto, cantidad) => {
+  const addToCart = (producto, quantity) => {
     setCart(prev => {
+      // Buscamos si ya existe el producto (o la variante específica)
       const existente = prev.find(p => p.id === producto.id);
 
       if (existente) {
@@ -14,8 +15,9 @@ export function CartProvider({ children }) {
           p.id === producto.id
             ? {
                 ...p,
-                cantidad: Math.min(
-                  p.cantidad + cantidad,
+                // Validamos que la suma no supere el stock disponible
+                quantity: Math.min(
+                  p.quantity + quantity,
                   p.stock
                 ),
               }
@@ -23,7 +25,8 @@ export function CartProvider({ children }) {
         );
       }
 
-      return [...prev, { ...producto, cantidad }];
+      // Si es nuevo, lo agregamos 
+      return [...prev, { ...producto, quantity }];
     });
   };
 
@@ -31,29 +34,31 @@ export function CartProvider({ children }) {
     setCart(prev => prev.filter(p => p.id !== id));
   };
 
+  // Total de items 
   const cartCount = cart.reduce(
-    (total, item) => total + item.cantidad,
+    (total, item) => total + item.quantity,
     0
   );
 
+  // Total en $ 
   const cartTotal = cart.reduce(
-    (total, item) => total + item.precio * item.cantidad,
+    (total, item) => total + item.precio * item.quantity,
     0
   );
   
-  const updateQuantity = (id, cantidad) => {
-  setCart(prev =>
-    prev.map(p =>
-      p.id === id
-        ? {
-            ...p,
-            cantidad: Math.max(1, Math.min(cantidad, p.stock)),
-          }
-        : p
-    )
-  );
-};
-
+  const updateQuantity = (id, quantity) => {
+    setCart(prev =>
+      prev.map(p =>
+        p.id === id
+          ? {
+              ...p,
+              // No permite bajar de 1 ni superar el stock
+              quantity: Math.max(1, Math.min(quantity, p.stock)),
+            }
+          : p
+      )
+    );
+  };
 
   return (
     <CartContext.Provider
