@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./paymentSuccess.css";
+import "./PaymentSuccess.css";
 
 export default function PaymentSuccess({ setPage, clearCart }) {
   const [payment, setPayment] = useState(null);
